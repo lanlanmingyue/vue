@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-自定义指令</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>自定义指令</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                      <!-- 自定义指令 的使用-->
+                      <!-- 定义一个 directive 只需要3个函数：bind(), update(), unbind()。这三个函数分别在 directive 和元素被绑定、对应的数据发生变化，以及解除绑定的时候被调用，而且都是可选的 -->
+                      <h3>自定义指令</h3>
+                      <!-- 自定义指令 start -->
+                     <button v-disable="disabled">
+                        {{disabled ? 'Disabled' : 'Submit'}}
+                    </button>
+                    <!-- 触发改变disabled值，然后触发自定义指令disable-->
+                    <button v-on:click= "disabled = !disabled">toggle</button>            
+                    <!-- #app  end -->
+                            </div>
+                        </div>
+                    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            /*计算属性 end*/
+            data: {
+            disabled: false,//2.自定义指令值的默认值
+            message:"hello,vue!"
+          }
+          // data  end
+        });
+      //1.自定义指令v-disable
+      Vue.directive('disable', {
+    // 每当绑定的数据变化时，这个函数就被调用啦
+    update: function (value) {
+             // 这里的 this 指向一个directive对象。
+             // this.el 指向当前被绑定的DOM元素
+             // value则是所绑定数据的新值
+             this.el.disabled = !!value;
+        }
+    })
+    </script>
+</html>

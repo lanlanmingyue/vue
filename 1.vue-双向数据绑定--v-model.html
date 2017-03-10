@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-插值与v-model（双向数据绑定）</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>插值与v-model（双向数据绑定）</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                <div>这样不会变：{{*message}}  message不会随着数据的改变而更新
+                    </br>这样会变：{{message}}
+                </div>
+                <p>
+                    <h2>同时还支持一些简单的样式</h2>
+                    <h4>值与字符串拼接：{{message + 'vue is awesome'}} <br>
+字符串反转：{{ message.split('').reverse().join('') }}
+</h4>
+                </p>
+                <input type="text" v-model="message">
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            data: {
+                message:'hello vue.js.'
+            }
+        });
+    </script>
+</html>

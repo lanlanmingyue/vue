@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-显示数组v-repeat</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>显示数组</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                      <!-- 显示数组-->
+                      <h3>显示数组</h3>
+                      <!-- 显示数组 start -->
+                      <!-- {{$index}} 特殊的 $index 属性，代表其当前在数组中的位置 -->
+                      <ul>
+                        <li v-for="todo in todos">
+                            序号：{{$index}} 
+                            名字：{{todo.title}}
+                            价格{{todo.price}}
+                        </li>
+                      </ul>
+                          <!-- 拓展函数-
+                          Vue.js 还给每一个被侦听的数组添加了 $set, 和 $remove 这两个扩展函数。由于在 ES5 中无法侦测数组直接对一个 index 赋值 （比如  arr[0] = value），需要用 arr.$set(0, value) 来保证 Vue.js 可以捕捉到事件；而 $remove 则只是一个用 splice 实现的便利函数，其参数可以是一个 index 也可以是数组中的一个对象
+                           -->
+                 <!-- #app  end -->
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+    // 定义数组
+    var todos = [
+    { title: 'learn javascript' ,
+    price:123
+    },
+    { title: 'learn Vue.js' ,
+    price:1111111
+    }
+    ];
+     //数组的添加。数组的方法：push, pop, shift, unshift, splice, reverse 和 sort    
+    todos.push({ title: 'learn everything!' });
+      var app1= new Vue({
+            el:'#app',
+            data: {
+            numbers: [1, 2, 3],
+            todos:todos //调用数组
+          }
+          // data  end
+        });
+      // index--不生效
+//todos.$remove(0);
+
+//object
+var target = todos[0]
+todos.$remove(target)
+        
+    </script>
+</html>

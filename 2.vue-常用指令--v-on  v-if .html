@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-常用指令</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>常用指令</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                    <h3>v-model  ps:v-model可用于一些表单元素,常见的input,checkbox,radio,select:</h3>
+                    <select v-model="selected" multiple>
+                      <option selected>A</option>
+                      <option>B</option>
+                      <option>C</option>
+                    </select>
+                    <br>
+                    <span>Selected: {{ selected | json }}</span>
+                    <input type="text" v-model="selected">
+                    <h3>v-for  ps:循环，列表渲染</h3>
+                    <ul  v-for="book in books">
+                        <li >id:{{book.id}}-书名：{{book.name}}-作者：{{book.author}}--价格：{{book.price}}<button type="button" class="btn btn-danger" @click="delBook(book)">删除</button></li>
+                    </ul>
+                    <h4>如果你比较细心的话，在数据还未加载完时是会有闪烁的情况出现，解决方法也很简单，使用v-cloak,然后定义css: [v-cloak] { display: none }</h4>
+                    <h3>v-on ps:vue.js通过v-on完成事件处理与绑定，比如为一个button绑定click事件，我们就可以这么写:</h3>
+                    <p><button v-on:click="doSomething">doSomething</button><button @click="doSomething">doSomething</button></p>
+                    <!-- 添加书籍 addBook()方法-->
+                    <div id="add-book">
+                     <legend>添加书籍</legend>
+                     <div class="form-group">
+                           <label for="">书名</label>
+                           <input type="text" class="form-control" v-model="book.name">
+                     </div>
+                     <div class="form-group">
+                            <label for="">作者</label>
+                            <input type="text" class="form-control" v-model="book.author">
+                     </div>
+                     <div class="form-group">
+                              <label for="">价格</label>
+                              <input type="text" class="form-control" v-model="book.price">
+                      </div>
+                      <button class="btn btn-primary btn-block" v-on:click="addBook()">添加</button>
+                    </div>
+                    <!-- v-if/v-else/v-show -->
+                    <h3>v-if</h3>
+                    <!-- v-if   从这里开始-->
+                        <div v-if=ok>if显示</div>
+                        <div v-else>else显示</div>
+                    <!-- v-if/v-else/v-show  -->
+                     <tr v-for="book in books">
+                        <template v-if="book.id%2==0">
+                          <td class="text-right">
+                             <button type="button" class="btn btn-success" @click="delBook(book)">删除</button>
+                           </td>
+                      </template>
+                      <template v-else>
+                            <td class="text-right">
+                               <button type="button" class="btn btn-danger" @click="delBook(book)">删除</button>
+                              </td>
+                       </template>
+                    </tr>
+                      <!-- v-if   在这里结束，这个模块要多练习-->
+                      <!-- 过滤器 的使用-->
+                      <h3>过滤器的使用</h3>
+                      <p>{{message | uppercase}}过滤器也能串联在一起使用{{message | reverse | uppercase}}</p>
+
+   
+
+            <!-- #app  end -->
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            ok: true,
+            methods: {
+                        doSomething: function () {
+                            console.log("点击事件简写@，为v-on传入事件参数,然后在vue的实例中声明doSomething这个方法就可以调用了");
+                        },
+                        //观察书籍列表v-for数据列表渲染那里
+                        addBook:function () {
+                                //计算书的id
+                                this.book.id = this.books.length + 1;
+                                this.books.push(this.book);
+                                //将input中的数据重置
+                                this.book = '';
+                        },
+                        //删除按钮
+                        //vue.js为数组扩展了$remove方法，查找并删除我们作为参数传递过去的book。
+                        delBook:function(book){
+                               this.books.$remove(book);
+                        }
+
+             },
+            data: {
+            message:"hello,vue!",
+            book: {
+                id: 0,
+                author: '',
+                name: '',
+                price: ''
+            },
+            books: [{
+                id: 1,
+                author: '曹雪芹',
+                name: '红楼梦',
+                price: 32.0
+            }, {
+                id: 2,
+                author: '施耐庵',
+                name: '水浒传',
+                price: 30.0
+            }, {
+                id: '3',
+                author: '罗贯中',
+                name: '三国演义',
+                price: 24.0
+            }, {
+                id: 4,
+                author: '吴承恩',
+                name: '西游记',
+                price: 20.0
+            }]
+        }
+        });
+      // 自定义过滤器
+      Vue.filter('reverse', function (value) {
+        return value.split('').reverse().join('')
+        })
+    </script>
+</html>

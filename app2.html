@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-表单处理</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>表单处理</h1>
+            <div id="app">
+                      <h3>表单处理</h3>
+                      <!-- 表单处理 start -->
+                      <!-- {{$index}} 特殊的 $index 属性，代表其当前在数组中的位置 -->
+                      <form >
+                        <!-- 普通文字输入 -->
+                        <p><input type="text" v-model="msg"> {{msg}}</p>
+                        <!-- 多选按钮 -->
+                        <p><input type="checkbox" v-model="checked"> {{checked ? "yes" : "no"}}</p>
+                        <!-- 单选按钮 -->
+                        <p>
+                            <input type="radio" name="picked" value="one" v-model="picked">
+                            <input type="radio" name="picked" value="two" v-model="picked">
+                            {{picked}}
+                        </p>
+                        <!-- 单选下拉 -->
+                        <p>
+                            <select v-model="selected">
+                                <option>one</option>
+                                <option>two</option>
+                                <option>three</option>
+                            </select>
+                            {{selected}}
+                        </p>
+                        <!-- 多选下拉 -->
+                        <p>
+                            <select v-model="multiSelect" multiple>
+                                <option>one</option>
+                                <option>two</option>
+                                <option>three</option>
+                            </select>
+                        </p>
+                    </form>
+                 <!-- #app  end -->
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            data: {
+            msg  : 'hi!',
+        checked  : true,
+        picked   : 'one',
+        selected : 'two',
+        multiSelect: ['one','three']
+          }
+          // data  end
+        });     
+    </script>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-过滤器的使用</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>过滤器的使用</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                      <!-- 过滤器 的使用-->
+                      <h3>过滤器的使用</h3>
+                      <p>{{message | uppercase}}过滤器也能串联在一起使用{{message | reverse | uppercase}}</p>
+                      <table>
+                        <tr>
+                        <!-- (1)添加sortby事件 -->
+                          <th class="text-right" @click="sortBy('id')">序号</th>
+                          <th class="text-right" @click="sortBy('name')">书名</th>
+                          <th class="text-right" @click="sortBy('author')">作者</th>
+                          <th class="text-right" @click="sortBy('price')">--价格</th> 
+                        </tr>
+                        <!-- （3）添加过滤器 -->
+                        <tr v-for="book in books| orderBy sortparam">
+                           <td>{{book.id}}</td>
+                           <td>{{book.name}}</td>
+                           <td>{{book.author}}</td>
+                           <td>--{{book.price}}</td>
+                        </tr>
+                      </table>
+            <!-- #app  end -->
+            </div>
+        </div>
+    </div>
+    <!-- 
+    过滤器
+与Linux中的管道类似，vue.js也使用的是|:
+
+{{message | uppercase}}
+这样就能输出message的大写了,过滤器也能串联在一起使用:
+
+{{message | reverse | uppercase}}
+这里reverse并不是内建的过滤器，我们可以用Vue.filter自定义:
+
+Vue.filter('reverse', function (value) {
+    return value.split('').reverse().join('')
+})
+过滤器支持接收参数，比较常用的是orderBy [param]和filterBy [param],现在我们为表格增加自定义排序的功能，为表头绑定click事件:
+
+ <th class="text-right" @click="sortBy('id')">序号</th>
+ <th class="text-right" @click="sortBy('name')">书名</th>
+ <th class="text-right" @click="sortBy('author')">作者</th>
+ <th class="text-right" @click="sortBy('price')">价格</th>
+想sortBy传递列的参数,定义sortBy和data:
+
+data: {
+    sortparam: ''
+ },
+methods:{
+sortBy: function(sortparam) {
+        this.sortparam = sortparam;
+     }
+}
+添加过滤器:
+
+ <tr v-for="book in books | orderBy sortparam">
+
+     -->
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            methods: {
+              // （2）定义事件，传参数。sortBy传递列的参数,定义sortBy和data
+                     sortBy: function(sortparam) {
+                      console.log(sortparam);
+                        this.sortparam = sortparam;
+                     }   
+             },
+            data: {
+            message:"hello,vue!",
+            sortparam: '',
+            book: {
+                id: 0,
+                author: '',
+                name: '',
+                price: ''
+            },
+            books: [{
+                id: 1,
+                author: '曹雪芹',
+                name: '红楼梦',
+                price: 32.0
+            }, {
+                id: 2,
+                author: '施耐庵',
+                name: '水浒传',
+                price: 30.0
+            }, {
+                id: '3',
+                author: '罗贯中',
+                name: '三国演义',
+                price: 24.0
+            }, {
+                id: 4,
+                author: '吴承恩',
+                name: '西游记',
+                price: 20.0
+            }]
+          }
+          // data  end
+        });
+      // 1.自定义过滤器
+      Vue.filter('reverse', function (value) {
+        return value.split('').reverse().join('')
+        })
+    </script>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-计算属性</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>计算属性</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                      <!-- 过滤器 的使用-->
+                      <h3>计算属性</h3>
+                      <table>
+                        <tr>
+                        <!-- (1)添加sortby事件 -->
+                          <th class="text-right" @click="sortBy('id')">序号</th>
+                          <th class="text-right" @click="sortBy('name')">书名</th>
+                          <th class="text-right" @click="sortBy('author')">作者</th>
+                          <th class="text-right" @click="sortBy('price')">--价格</th> 
+                        </tr>
+                        <!-- （3）添加过滤器 -->
+                        <tr v-for="book in books| orderBy sortparam">
+                           <td>{{book.id}}</td>
+                           <td>{{book.name}}</td>
+                           <td>{{book.author}}</td>
+                           <td>--{{book.price}}</td>
+                        </tr>
+                      </table>
+                      <!-- 计算属性:在app.html中使用插值表达式:{{sum}} -->
+                      <p>总价：<i>{{sum}}</i></p>
+            <!-- #app  end -->
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var app1= new Vue({
+            el:'#app',
+            methods: {
+              // （2）定义事件，传参数。sortBy传递列的参数,定义sortBy和data
+                     sortBy: function(sortparam) {
+                      console.log(sortparam);
+                        this.sortparam = sortparam;
+                     }   
+             },
+             /*计算属性--计算属性可以帮助我们完成一些复杂的逻辑计算，比如我们需要添加一个书的总价，在vue实例中添加computed:*/
+            computed: {
+                    sum: function() {
+                        var result = 0;
+                        for (var i = 0; i < this.books.length; i++) {
+                            result = Number(this.books[i].price) + result;
+                        };
+                        return result;
+                    }
+                },
+            /*计算属性 end*/
+            data: {
+            message:"hello,vue!",
+            sortparam: '',
+            book: {
+                id: 0,
+                author: '',
+                name: '',
+                price: ''
+            },
+            books: [{
+                id: 1,
+                author: '曹雪芹',
+                name: '红楼梦',
+                price: 32.0
+            }, {
+                id: 2,
+                author: '施耐庵',
+                name: '水浒传',
+                price: 30.0
+            }, {
+                id: '3',
+                author: '罗贯中',
+                name: '三国演义',
+                price: 24.0
+            }, {
+                id: 4,
+                author: '吴承恩',
+                name: '西游记',
+                price: 20.0
+            }]
+          }
+          // data  end
+        });
+      // 1.自定义过滤器
+      Vue.filter('reverse', function (value) {
+        return value.split('').reverse().join('')
+        })
+    </script>
+</html>
