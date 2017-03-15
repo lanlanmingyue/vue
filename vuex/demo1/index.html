@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>新版vuex写法</title>
+    <script src="lib/vue.js"></script>
+    <script src="lib/vuex.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<script>
+//编写组件，使用定义好的store
+    var App = Vue.extend({
+        template:`<div><p>this is vuex2.0 demo {{msg}}</p><button @click="add()">+</button> <br/></div>`,
+        //mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性：
+        //如果你想将一个 getter 属性另取一个名字，使用对象形式
+        // 映射 this.msg 为 store.getters.getMessage
+        computed:Vuex.mapGetters({
+            msg : 'getMessage'
+        }),
+        mounted:function(){
+            console.log(this.$store)
+        },
+        methods:{
+            add : function(){
+                //dispatch分发action
+                //你需要明白 store.dispatch 可以处理被触发的action的回调函数返回的Promise，
+                //并且store.dispatch仍旧返回Promise
+                this.$store.dispatch('ADD',5).then(function(resp){
+                    //输出“ok”
+                    console.log(resp);
+                })
+            }
+        }
+    })
+//定义store的四个状态 state，mutations,actions,getters
+    var store =  new Vuex.Store({
+        //1.state:从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态.
+        //此处返回messages为0
+        state: {
+            messages: 0
+        },
+        //2.更改 Vuex 的 store 中的状态的唯一方法是提交 mutation
+        //mutation必须是同步函数
+        //此处定义了“ADD”方法
+        mutations:{
+            "ADD": function(state, msg) {
+                state.messages += msg;
+            }
+        },
+        //3.Action 提交的是 mutation，而不是直接变更状态
+        //Aciton可以包含任意异步函数
+        actions:{
+            "ADD" : function(store , param){
+                return new Promise(function(resolve, reject) {
+                    store.commit('ADD',param) //此处调用了mutation定义的方法
+                    resolve("ok");
+                })
+            },
+        },
+        getters:{
+            getMessage:function(state){
+                 console.log("getter"+state.messages);//getter后面的值跟dispatch第二个参数有关系
+                return state.messages
+
+            }
+        }
+    })
+
+
+    new Vue({
+        el: '#app',
+        store,
+        render: function(h){
+             return h(App)
+        }
+    })
+</script>
+</body>
+</html>
