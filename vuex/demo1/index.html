@@ -2,7 +2,7 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>新版vuex写法</title>
+    <title>新版vuex写法--给状态配以公用方法，将状态的变更及时响应并处理</title>
     <script src="lib/vue.js"></script>
     <script src="lib/vuex.js"></script>
 </head>
@@ -36,13 +36,17 @@
 //定义store的四个状态 state，mutations,actions,getters
 //`store`是我们正常要维护的状态数据,`mutatinons`是操作和维护store的处理
     var store =  new Vuex.Store({
-        //1.state:从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态.
+        //1.state:放置公用状态。从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态.
         //此处返回messages为0
         state: {
             messages: 0
         },
         //2.更改 Vuex 的 store 中的状态的唯一方法是提交 mutation
         //mutation必须是同步函数
+         //写法与getters相类似
+        //组件想要对于vuex 中的数据进行的处理
+        //组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦
+        //内部操作必须在此刻完成(同步)
         //此处定义了“ADD”方法
         mutations:{
             "ADD": function(state, msg) {
@@ -51,7 +55,19 @@
         },
         //3.Action 提交的是 mutation，而不是直接变更状态
         //Aciton可以包含任意异步函数
+        //使得mutations能够实现异步调用，实现例如延迟调用
         actions:{
+            /*
+         increment ({ commit }, payload) {
+                    commit('突变方法名')
+                    //payload应该是一个对象，可通过模板方法调用传入对象的方式将数据从组件传入vuex
+                },
+        asyncIncrement({commit}) => {
+            setTimeout(() => {
+                commit('increment')
+            }, 1000)
+        }
+            */
             "ADD" : function(store , param){
                 return new Promise(function(resolve, reject) {
                     store.commit('ADD',param) //此处调用了mutation定义的方法
@@ -59,24 +75,63 @@
                 })
             },
         },
-		//getters 定义公用的getters处理 ,例如正常组件里想computed一个状态但在vuex里面不知道怎么处理，就可以在这里处理。
+		//getters ：相当于vue实例中的methods,用于处理公用data。定义公用的getters处理 ,例如正常组件里想computed一个状态但在vuex里面不知道怎么处理，就可以在这里处理。
+        //自vuex 面向组件的数据处理
         getters:{
             getMessage:function(state){
                  console.log("getter"+state.messages);//getter后面的值跟dispatch第二个参数有关系
                 return state.messages
 
             }
-        }
+        },
+        modules: {
+        //引入某一个state的以上集合的模块，会自动分别填充到上面，使得结构更加清晰
+            }
     })
 
 
     new Vue({
         el: '#app',
-        store,
+        store, ////注入根组件
         render: function(h){
              return h(App)
         }
     })
 </script>
+<!-- 
+***访问vuex中的方法：
+this.$store.state.数据名
+this.$store.getters.方法名
+
+****将 store 中的 getters/mutations 映射到局部(计算属性/方法)使用mapGetters/mapMutations辅助函数
+import { mapGetters } from 'vuex'
+
+computed: {
+  // 使用对象展开运算符将 getters 混入 computed 对象中
+    ...mapGetters([
+        //映射 this.doneTodosCount 为 store.getters.doneTodosCount
+      'doneTodosCount',
+      //'getter名称',
+
+      // 映射 this.doneCount 为 store.getters.doneTodosCount
+        doneCount: 'doneTodosCount'
+      // 三个点表示将内部拿出生成键值对，这样使得组件本身的计算属性不受影响
+      // 此语法依赖babel-preset-stage-2
+    ])
+  }
+  ******使用 v-model 绑定 vuex 计算属性的时候要设置get 和 set 才能双向绑定
+  computed: {
+    value: {
+        get () {
+            return this.$store.getters.value;
+        },
+        set (event) {
+            this.$store.dispatch('updateValue', event.target.value);
+        }
+    }
+}
+
+
+ -->
 </body>
 </html>
