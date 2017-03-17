@@ -10,6 +10,14 @@
 <div id="app"></div>
 <script>
 //编写组件，使用定义好的store
+/*
+store是存储所有初始状态的，
+mutation是存 （即对数据进行修改）
+action是负责处理存储数据，只负责处理。  
+getter是只负责取
+vuex 的数据流：
+后（qian）端通过 action处理数据，然后通过 mutation 把处理后的数据放入数据库（state）中，谁要用就通过 getter从数据库（state）中取。
+*/
     var App = Vue.extend({
         template:`<div><p>this is vuex2.0 demo {{msg}}</p><button @click="add()">+</button> <br/></div>`,
         //mapGetters 辅助函数仅仅是将 store 中的 getters 映射到局部计算属性：
@@ -35,6 +43,8 @@
     })
 //定义store的四个状态 state，mutations,actions,getters
 //`store`是我们正常要维护的状态数据,`mutatinons`是操作和维护store的处理
+//四个状态的简单解释说明：，mutation 只管存，你给我（dispatch）我就存；
+//action只管中间处理，处理完我就给你，你怎么存我不管；Getter 我只管取，我不改的。
     var store =  new Vuex.Store({
         //1.state:放置公用状态。从 store 实例中读取状态最简单的方法就是在计算属性中返回某个状态.
         //此处返回messages为0
@@ -44,7 +54,7 @@
         //2.更改 Vuex 的 store 中的状态的唯一方法是提交 mutation
         //mutation必须是同步函数
          //写法与getters相类似
-        //组件想要对于vuex 中的数据进行的处理
+        //组件想要对于vuex 中的数据进行的处理，mutation（存储）
         //组件中采用this.$store.commit('方法名') 的方式调用，实现充分解耦
         //内部操作必须在此刻完成(同步)
         //此处定义了“ADD”方法
@@ -53,9 +63,20 @@
                 state.messages += msg;
             }
         },
+        /*
+        Mutation除了接收 state 作为第一个参数外，还可以接收其他的参数，比如：
+
+          [NEW_DATA] (state, payload, id){
+            const newData = {id, data: payload}
+            state.meta = Object.assign({}, {currentData: id})
+            state.datas = Object.assign({}, newData)
+          },
+
+        */
         //3.Action 提交的是 mutation，而不是直接变更状态
         //Aciton可以包含任意异步函数
         //使得mutations能够实现异步调用，实现例如延迟调用
+		//action的数据中间处理
         actions:{
             /*
          increment ({ commit }, payload) {
@@ -67,6 +88,10 @@
                 commit('increment')
             }, 1000)
         }
+		export const updateName = function({ dispatch, state }, name) {
+			const payload = {name}
+			dispatch('UPDATE_PAGE', payload)
+}
             */
             "ADD" : function(store , param){
                 return new Promise(function(resolve, reject) {
@@ -75,8 +100,10 @@
                 })
             },
         },
-		//getters ：相当于vue实例中的methods,用于处理公用data。定义公用的getters处理 ,例如正常组件里想computed一个状态但在vuex里面不知道怎么处理，就可以在这里处理。
+		//getters ：相当于vue实例中的methods,用于处理公用data。定义公用的getters处理 ,
+		//例如正常组件里想computed一个状态但在vuex里面不知道怎么处理，就可以在这里处理。
         //自vuex 面向组件的数据处理
+        //接收参数 state，返回你想取的值
         getters:{
             getMessage:function(state){
                  console.log("getter"+state.messages);//getter后面的值跟dispatch第二个参数有关系
@@ -99,6 +126,7 @@
     })
 </script>
 <!-- 
+***存东西的，叫 store ，共享的数据就叫 state
 ***访问vuex中的方法：
 this.$store.state.数据名
 this.$store.getters.方法名
@@ -130,8 +158,46 @@ computed: {
         }
     }
 }
+****4、action
 
+先来一个简单点的。
 
+export const updateName = function({ dispatch, state }, name) {
+  const payload = {name}
+  dispatch('UPDATE_PAGE', payload)
+}
+一个叫 updateName 的 action（数据的中间处理），前面花括号是一个参数，state，如果不理解，看看阮一峰的 ES6入门，对象解构。它接收用户输入的数据 name，然后中间处理的过程就是把 name 包成了对象{name: name}，然后通过 mutation（update_page） 存储。至于 update_page 干了什么，那不是 action（中间处理）的事儿，那是 mutation（存储）的逻辑。
+
+export const updateData = function({ dispatch, state }, data) {
+  const payload = data
+  const id = state.meta.currentData
+  if (id === 'initial') {
+    const id = createDataId()
+    dispatch('NEW_DATA', payload, id)
+  } else {
+    dispatch('UPDATE_DATA', payload)
+  }
+}
+这个 action 叫 updateData,里面先把 data 改了个名字，然后加了判断，如果 id 是‘initial’ 就怎么存。。。否则怎么存。。。
+
+听着玄乎其神的异步操作的 action。
+
+export const save = function({ dispatch, state }) {
+  const params = state
+  api.save(params).then(function(res) {
+    console.log(res)
+    dispatch('SAVE_SUCCESS', res)
+  }).catch((err) => {
+    console.log(err)
+    dispatch('SAVE_FAIL', err)
+  })
+}
+一个叫 save 的 action。首先在里面发起了一个请求，这个请求是经过包装的（改了名字叫 api.save），咱不管它改名字这茬儿。第一个 then 就是成功的回调，通过 res 拿到数据，拿到数据了就怎么存。。。第二个 catch 就是失败的回调，通过 err 拿到错误信息，拿到错误信息了怎么存。。。呵呵，跟if判断差不多嘛。。。其实异步的 action 还可以发送第三个 dispatch 的，在发起请求前先保存下原始数据，有时候有需求会用到的，比如官方 DEMO 的购物车。
+
+看来形式怎么变，action 里面的逻辑不会变，它做的事情不会变。
+
+*****mapGetters写在了 computed 里面，这说明虽然 getter我们写的是函数，但是我们应该把它当成计算属性来用
+action放在了 methods 里面，说明我们应该把它当成函数来用
  -->
 </body>
 </html>
