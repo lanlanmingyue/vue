@@ -166,7 +166,9 @@ export const updateName = function({ dispatch, state }, name) {
   const payload = {name}
   dispatch('UPDATE_PAGE', payload)
 }
-一个叫 updateName 的 action（数据的中间处理），前面花括号是一个参数，state，如果不理解，看看阮一峰的 ES6入门，对象解构。它接收用户输入的数据 name，然后中间处理的过程就是把 name 包成了对象{name: name}，然后通过 mutation（update_page） 存储。至于 update_page 干了什么，那不是 action（中间处理）的事儿，那是 mutation（存储）的逻辑。
+一个叫 updateName 的 action（数据的中间处理），前面花括号是一个参数，state，如果不理解，看看阮一峰的 ES6入门，
+对象解构。它接收用户输入的数据 name，然后中间处理的过程就是把 name 包成了对象{name: name}，
+然后通过 mutation（update_page） 存储。至于 update_page 干了什么，那不是 action（中间处理）的事儿，那是 mutation（存储）的逻辑。
 
 export const updateData = function({ dispatch, state }, data) {
   const payload = data
@@ -192,7 +194,11 @@ export const save = function({ dispatch, state }) {
     dispatch('SAVE_FAIL', err)
   })
 }
-一个叫 save 的 action。首先在里面发起了一个请求，这个请求是经过包装的（改了名字叫 api.save），咱不管它改名字这茬儿。第一个 then 就是成功的回调，通过 res 拿到数据，拿到数据了就怎么存。。。第二个 catch 就是失败的回调，通过 err 拿到错误信息，拿到错误信息了怎么存。。。呵呵，跟if判断差不多嘛。。。其实异步的 action 还可以发送第三个 dispatch 的，在发起请求前先保存下原始数据，有时候有需求会用到的，比如官方 DEMO 的购物车。
+一个叫 save 的 action。首先在里面发起了一个请求，这个请求是经过包装的（改了名字叫 api.save），
+咱不管它改名字这茬儿。第一个 then 就是成功的回调，通过 res 拿到数据，拿到数据了就怎么存。。。
+第二个 catch 就是失败的回调，通过 err 拿到错误信息，拿到错误信息了怎么存。。。呵呵，跟if判断差不多嘛。。。
+其实异步的 action 还可以发送第三个 dispatch 的，在发起请求前先保存下原始数据，
+有时候有需求会用到的，比如官方 DEMO 的购物车。
 
 看来形式怎么变，action 里面的逻辑不会变，它做的事情不会变。
 
