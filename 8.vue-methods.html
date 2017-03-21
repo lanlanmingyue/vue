@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-显示数组v-repeat</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="col-md-6 col-md-offset-3">
+            <h1>methods</h1>
+            <img src="images/qq.png" alt="">
+            <div id="app">
+                      
+                 <!-- #app  end -->
+                 <h3>computed与methods的区别</h3>
+                 <p>Vue的计算属性（computed)的属性会<b>自动</b>混入Vue的实例中。所有 getter 和 setter 的 this 上下文自动地绑定为 Vue 实例</p>
+                 <p>methods 将被混入到 Vue 实例中。可以直接通过 VM 实例访问这些方法，或者在指令表达式中使用。方法中的 this 自动绑定为 Vue 实例。<b>即有触发条件</b></p>
+            </div>
+        </div>
+    </div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+    var app1= new Vue({
+            el:'#app',
+            data: {
+        
+            } ,
+            // methods中的A方法怎么调用method中的B方法。他们都作为属性加到this中去了，所以要注意data中的命名不能和methods中冲突
+            methods:{
+              a: function(){
+                console.log("function a run !");
+                this.b();
+              },
+              b:function(){
+                console.log("function b run !");
+              }
+            }
+          });
+
+          app1.a();     
+    </script>
+</html>

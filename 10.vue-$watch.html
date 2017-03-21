@@ -1,0 +1,42 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue入门之生命周期</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>{{ testDate.startTest }}</p>
+    <p>$watch()监听某个值（双向绑定）的变化，一旦发生变化，就调用引号里的方法</p>
+    <input type="text" name="btnSetNumber" v-model="testDate.startTest">
+  </div>
+  <script>
+    var app = new Vue({         
+      el: '#app',               
+      data: {                   
+        //number: '1',
+        testDate: {  
+            startTest: 'ss',  
+            endTest: ''  
+        }  
+      },
+      mounted: function() {  
+        //  
+        console.log('mm---'+this.testDate.startTest);
+      },  
+    methods: {  
+        testMethod: function(){  
+            //do some here  
+            console.log(this.testDate.startTest);
+        }  
+    },  
+    watch: {  
+        'testDate.startTest': 'testMethod',
+        'testDate.endTest': 'testMethod'
+       }
+      
+    });
+  </script>
+</body>
+</html>
