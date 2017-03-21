@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-计算属性</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body id="content">
+<p>computed就是 实时计算 使用。
+Vue检测到数据发生变动时就会执行对相应数据有引用的函数</p>
+   <child :childrens="childrens"></child>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+    <script type="text/javascript">
+      var child = Vue.extend( {
+        //props 可以是数组或对象，用于接收来自父组件的数据
+        props: {
+            childrens: ''
+        },
+        template: '<div >年龄是{{age}} 名字是{{name}}</div>',
+        data: function() {
+            return {
+                name: 'child的名字',
+                age: 18
+            };
+        },
+        computed: {
+            age: function() {
+                return this.childrens.age +10;
+            }
+        }/*,
+        created: function() {
+            var _parent = this.$parent;
+            this._set = {};
+            this._set = _parent; 
+        }*/
+    } );
+    var vm = new Vue( {
+        el: 'body',
+        data: {
+            childrens: {
+                name: '小强',
+                age: 20,
+                sex: '男'
+            }
+        },
+        components: {
+            'child': child
+        }
+    } );
+    vm.$data.childrens.age = 90;
+    </script>
+</html>
