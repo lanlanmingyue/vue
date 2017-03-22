@@ -1,0 +1,74 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue入门之声明响应式属性</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>声明响应式属性</p>
+    <p>需求：有个点击显示搜索并让搜索框获取焦点的需求</p>
+    <p>由于Vue不允许动态添加根级响应式属性，所以你必须在初始化实例前声明根级响应式属性，哪怕只有一个空值</p>
+    <p>$nextTick的使用方式：nextTick是计划在当你更改了某些响应式的数据时使用的。----也就是说，nextTick应该被用在某些计算属性或者watch再或者某个按钮click事件绑定的methods当中。这时，nextTick才能保证你的数据更新完成之后再执行你绑定的函数</p>
+    <img src="images/qq.png">
+    <div class="soubox">
+      <button class="showsearch" @click="showsou">搜索</button>
+      <div class="sou" v-show="showit">
+        <input type="text" name="" id="keywords">
+        <div class="closesou" @click="hidesou">X</div>
+      </div>
+    </div>
+  </div>
+  <!-- vm.$nextTick() 这个实例方法比较方便，因为它不需要全局 Vue，它的回调的 this 自动绑定到当前 Vue 实例：
+  Vue.component('example', {
+ template: '<span>{{msg}}</span>',
+ data: function () {
+ return {
+ msg: 'not updated'
+ }
+ },
+ methods: {
+ updateMessage: function () {
+ this.msg = 'updated'
+ console.log(this.$el.textContent) // => 'not updated'
+ this.$nextTick(function () {
+ console.log(this.$el.textContent) // => 'updated'
+ })
+ }
+ }
+})
+
+   -->
+  <script>
+    var app = new Vue({         
+      el: '#app',           
+      data: {                   
+        //number: '1', 
+        showit: false
+      },
+      mounted: function() {  
+        //  
+        console.log('加载完成');
+      },  
+      methods: {  
+        showsou(){
+            this.showit = true
+            console.log("没更新")
+            this.$nextTick(function () {
+              // DOM 更新了
+              document.getElementById("keywords").focus()
+            })
+          },
+          hidesou(){
+            this.showit = false
+          }
+          
+      },
+      components: {
+            
+        }
+    });
+  </script>
+</body>
+</html>

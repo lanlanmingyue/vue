@@ -1,0 +1,81 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Vue入门之生命周期</title>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>
+  <div id="app">
+    <p>我们给它添加了一个自定义属性值，（item.id是从动态添加的）</p>
+    <p>点击获得当前li的item的id</p>
+    <p>html代码中显示自定义属性：dataid="1"</p>
+    <ul>
+      <eleven v-for="item in items" :ttt="item"></eleven>
+    </ul>
+  </div>
+  <script>
+  //定义组件eleven
+  var eleven = Vue.extend( {
+        //props 可以是数组或对象，用于接收来自父组件的数据
+        //此处接收父组件的数据item，为ttt
+        //用处：可利用此特性进行数据展现，如本页面，或者进行路由地址拼接。
+        //例如：<router-link :to="'/business' + a.path"></router-link>
+        props: {
+            ttt: ''
+        },
+        template: '<li  :dataid="ttt.id" class="left t-title"  @click="getDataId(ttt.id)">id:{{ttt.id}} ---书名:{{ttt.name}}--作者：{{ttt.author}}</li>',
+        data: function() {
+            return {
+            };
+        },
+        computed: {
+            
+        },
+        methods:{
+          getDataId(id) {
+              console.log(id);
+          }
+        }
+    } );
+  //定义组件eleven结束
+    var app = new Vue({         
+      el: '#app',           
+      data: {                   
+        //number: '1', 
+        items: [{
+                id: 1,
+                author: '曹雪芹',
+                name: '红楼梦',
+                price: 32.0
+            }, {
+                id: 2,
+                author: '施耐庵',
+                name: '水浒传',
+                price: 30.0
+            }, {
+                id: '3',
+                author: '罗贯中',
+                name: '三国演义',
+                price: 24.0
+            }, {
+                id: 4,
+                author: '吴承恩',
+                name: '西游记',
+                price: 20.0
+            }]
+      },
+      mounted: function() {  
+        //  
+        console.log('加载完成');
+      },  
+      methods: {  
+          
+      },
+      components: {
+            'eleven': eleven
+        }
+    });
+  </script>
+</body>
+</html>
