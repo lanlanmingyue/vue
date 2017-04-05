@@ -19,7 +19,8 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
-
+# 此项目作用
+作为初始项目搭建  文件目录框架
 # 文件结构
 src 里面放着项目的所有文件。
 api 放模拟数据,处理数据接口。
