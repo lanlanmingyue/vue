@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-props与v-for结合</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        .disabled {
+          color: orange;
+        }
+    </style>
+</head>
+<body>
+<p>props与v-for结合，:class绑定样式:class={样式名：布尔值}</p>
+<h3> v-bind:class 简写为：class</h3>
+<h3>v-on:click 简写为@click</h3>
+<div id="app">
+    <ul>
+    <!-- v-for 依次遍历出posts, 并把遍历出的单项值iii赋给属性post,然后子组件就可以从父组件的DATA里读取值 -->
+        <post  v-for="iii in posts" :post='iii'></post>
+    </ul>
+    <!-- 2.输入框绑定 -->
+    <div id="comment-box">
+      <div class="input-group">
+      <!-- @keyup.enter 是vue的keyup监听事件，使之可以按输入，而不是只能按提交按钮
+       -->
+        <input type="text" class="form-control" placeholder="Enter a comment..." v-model="post" @keyup.enter="postComment">
+        <span class="input-group-btn">
+                    <button class="btn btn-primary" type="button" @click="postComment">Sumbit</button>
+                </span>
+      </div>
+    </div>
+</div>
+<!--组件内容-->
+<template id="post-template">
+   <li class="list-group-item">
+     <i class="glyphicon glyphicon-chevron-up" @click="upvote" :class="{disabled: upvoted}"></i>
+            <span class="label label-primary">{{ votes }}</span>
+            <i class="glyphicon glyphicon-chevron-down" @click="downvote" :class="{disabled: downvoted}"></i>
+            <a>{{ post.title }}</a>
+  </li>
+</template>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+<script type="text/javascript">
+// 定义组件post--子组件
+Vue.component('post',{
+    template: '#post-template',
+    data:function(){
+        //设置布尔变量，给
+        return {
+            upvoted: false,
+            downvoted: false
+        }
+    },
+    props: ['post'],
+    methods: {
+        upvote: function () {
+          this.upvoted = !this.upvoted;
+          this.downvoted = false;
+        },
+        downvote: function () {
+          this.downvoted = !this.downvoted;
+          this.upvoted = false;
+        }
+    },
+     computed: {
+        votes: function () {
+          if (this.upvoted) {
+            return this.post.votes + 1;
+          } else if (this.downvoted) {
+            return this.post.votes - 1;
+          } else {
+            return this.post.votes;
+          }
+        }
+  }
+})
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            posts:[{
+                title:'A post one',
+                votes:15
+            },{
+                title:'B post one',
+                votes:10
+            },{
+                title:'C post one',
+                votes:1
+            }],
+            post: "" ////2.输入框绑定,预先定义单个值
+        },
+        methods: {
+            //2.输入框绑定,定义事件
+             postComment: function() {
+              this.posts.push({
+                title: this.post,
+                votes: 0
+              })
+              this.post = ""; //2.这里是为了不改变输入框的placeholder的值
+            }
+        },
+        computed: {
+        }
+    });
+</script>
+</html>

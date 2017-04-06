@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-组件</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<p>component组件： Vue.component()</p>
+<div id="app">
+<!-- 1.全局组件调用 -->
+    <greeting></greeting>
+    <!-- 2.调用flexgreet -->
+    <flexgreet></flexgreet>
+    <!-- 3.props 传递数据 侧重知识点：-->
+    <!-- 
+    组件间的通信：父传子：可以在组件上使用自定义属性绑定数据，在组建中需要显式的用props声明自定义属性名。
+    子传父组件：需要声明自定义事件，父组件用$on监听自定义事件，$emit触发父组件所关心的自定义事件      
+     -->
+    <post :title='title' :author='author' :content='content'></post>
+</div>
+<!-- 2.flexgreet组件内容 -->
+ <template id="flexid">
+        <h1>template要放在</h1>
+        <h2>我是包含很多标签的组件</h2>
+        <h3>很好。是吗？</h3>
+        <h4>是的</h4>
+    </template>
+    <!-- 3.props 传递数据 ，组件内容-->
+    <template id="post-template">
+    <h1>{{ title }}</h1>
+    <h4>{{ author }}</h4>
+    <p>{{ content }}</p>
+</template>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+<script type="text/javascript">
+// 1.全局组件的写法，直接定义并使用
+Vue.component('greeting',{
+    template: '<h1>Welcome to coligo!</h1>'
+});
+// 2.定义组件flexgreet
+Vue.component('flexgreet',{
+    template: '#flexid'
+});
+// 3.props 传递数据 ,定义组件post--子组件
+Vue.component('post',{
+    template: '#post-template',
+    props: ['title', 'author', 'content']
+})
+    var vm = new Vue({
+        el: '#app',
+        data: {
+            // 父组件定义数据
+        author: 'Johnnie Walker',
+        title: 'Aging Your Own Whisky',
+        content: 'A bunch of steps and a whole lot of content'
+        },
+        methods: {
+        },
+        computed: {
+        }
+    });
+</script>
+</html>

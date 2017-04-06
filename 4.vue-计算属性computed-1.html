@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-计算属性</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+</head>
+<body>
+<p>computed与v-model的使用，computed自动监听userInput的变化，若有变化，则进行重新计算更新状态（因为计算属性里有userInput）。</p>
+<div id="vue-instance">
+    Guess a number between 1 and 10: 
+    <input type="number" v-model="userInput">
+    <b>{{ message }}</b>
+</div>
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#vue-instance',
+        data: {
+            userInput: 0,
+            randomNumber: 5
+        },
+        methods: {
+            getRandomNumber: function(min, max){
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+        },
+        computed: {
+            message: function(){
+              //v-model已绑定userInput，所以输入值变化，这里也会相应的变化。这里变化时，触发这里
+              console.log("userInput:"+this.userInput);
+                if (this.userInput < this.randomNumber) {
+          this.randomNumber = this.getRandomNumber(1, 10);
+          console.log("randomNumber:"+this.randomNumber);
+                    return 'You got it right!';
+                } else {
+          this.randomNumber = this.getRandomNumber(1, 10);
+          console.log("randomNumber:"+this.randomNumber);
+                    return 'Try again!';
+
+                }
+
+            }
+        }
+    });
+</script>
+</html>
