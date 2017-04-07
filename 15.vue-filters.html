@@ -1,0 +1,58 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>filters</title>
+  <script src="vue_lib/vue.min.js"></script>
+</head>
+<body>
+  <div id="app">
+  <!-- capitalize 首字母大写
+  uppercase  字母大写
+  currency 功能:输出金钱以及小数点,参数:
+第一个参数     {String} [货币符号] - 默认值: '$'
+第二个参数     {Number} [小数位] - 默认值: 2
+举个例子：currency '¥' "1"  输出 ￥70.00
+ {{message | currency}} 输出$123.47
+ filterBy 数据过滤
+ orderby 数据排序  orderBy sortKey [reverseKey].
+   -->
+    <input type="text" v-model="message" name="message" />
+    <h4>{{ message|uppercase }}</h4>
+    <ul>
+      <li v-for="product in products | filterBy 'electronics' in 'category'| orderBy 'name'"">
+        {{product.name|capitalize}} --{{product.price|currency '¥' "1" }}--{{product.category}}--
+      </li>
+    </ul>
+    <h3>折扣后</h3>
+     <ul>
+      <li v-for="product in products">
+        {{product.name|capitalize}} --{{product.price|discount 10|currency '¥' "1" }}--{{product.category}}--
+      </li>
+    </ul>
+    <!-- 自定义filter：Vue.filter() -->
+  </div>
+  <script>
+  //自定义 filter
+  Vue.filter('discount', function(value,count){
+  return value * count/100;
+});
+    var app = new Vue({
+      el: '#app',
+      data: { 
+        message: 'iis',
+        products: [
+      {name: 'Bmicrophone', price: 25, category: 'electronics'},
+      {name: 'Aaptop case', price: 15, category: 'accessories'},
+      {name: 'Ccreen cleaner', price: 17, category: 'accessories'},
+      {name: 'eaptop charger', price: 70, category: 'electronics'},
+      {name: 'douse', price: 40, category: 'electronics'},
+      {name: 'earphones', price: 20, category: 'electronics'},
+      {name: 'monitor', price: 120, category: 'electronics'}
+    ],
+    product: ''
+      }
+    });
+  </script>
+</body>
+</html>

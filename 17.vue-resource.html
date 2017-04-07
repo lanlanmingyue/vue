@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>GitHub Markdown Preview with VueJs - coligo</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="github-markdown.css">
+
+    <style>
+        body {
+            background-color: #f4f7f7;
+        }
+
+        .header-text h4 {
+            color: #454552;
+        }
+
+        .header-text h1 {
+            color: #e85a71;
+        }
+
+        #editor,
+        #preview {
+            height: 500px;
+            max-height: 500px;
+            margin-bottom: 20px;
+            margin-top: 20px;
+        }
+
+        .panel {
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 10px;
+        }
+
+        .container {
+            padding-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="container">
+        <div class="row">
+            <div class="col-xs-12 header-text">
+                <h1>GitHub Markdown Preview</h1>
+                <h4>coligo.io</h4>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6">
+                <textarea id="editor" class="form-control"></textarea>
+            </div>
+            <div id="preview" class="col-xs-12 col-md-6">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <article class="markdown-body">
+
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <button type="button" class="btn btn-primary pull-right">Preview</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.2.0.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+</body>
+
+</html>
