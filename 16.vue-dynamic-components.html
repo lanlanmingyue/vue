@@ -12,6 +12,12 @@
 2.动态组件
 3. keep-alive 保持关闭组件活着，防止页面重新渲染
 4.transition-mode="out-in"  组件切换时的动画
+5.自定义元素 :is="my-component"
+eg:
+<ul>
+  //不能直接使用组件名 <my-component></my-component>
+  <li :is="my-component"></li>
+</ul>
  -->
   <div id="app">
   <div class="header clearfix">
