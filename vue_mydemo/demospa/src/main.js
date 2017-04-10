@@ -4,16 +4,15 @@ import VueRouter from 'vue-router'
 import VueResource from 'vue-resource'
 
 import App from './App'
-import Home from './components/Home'
 import './lib/bootstrap/css/bootstrap.min.css'
 
 import store from './store'
-import TimeEntries from './components/TimeEntries.vue'
+import router from './router'
 
 Vue.use(VueRouter)
 Vue.use(VueResource)
 
-const routes = [{
+/*const routes = [{
   path : '/',
   component : Home
 },{
@@ -30,9 +29,10 @@ const routes = [{
 }
 ];
 
+
 const router = new VueRouter({
   routes
-});
+});*/
 
 /* eslint-disable no-new */
 // 实例化我们的Vue
