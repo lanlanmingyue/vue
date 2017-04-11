@@ -23,4 +23,25 @@ export default {
   [types.DELETE_PLAN] (state, idx) {
     state.list.splice(idx, 1);
   }
+,
+        [types.USER_SIGNIN](state, user) {
+            sessionStorage.setItem('user', JSON.stringify(user))
+            Object.assign(state, user)//浅拷贝、对象属性的合并,改变state
+        },
+        [types.USER_SIGNOUT](state) {
+            sessionStorage.removeItem('user')
+            Object.keys(state).forEach(k => Vue.delete(state, k))
+            //[].forEach(function(value, index, array) {  // ...});
+            /*[1, 2 ,3, 4].forEach(alert);相当于如下
+                var array = [1, 2, 3, 4];
+                for (var k = 0, length = array.length; k < length; k++)
+                { alert(array[k]);}
+            */
+            /*
+            Obeject.keys() //获取对象的所有属性
+            */
+            /*
+            此行解释为： 获取对象的所有属性后，遍历这些属性，并删除
+            */
+        }
 };

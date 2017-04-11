@@ -3,7 +3,9 @@ import Router from 'vue-router'
 
 
 import Home from '../components/Home'
-import TimeEntries from '../components/TimeEntries.vue'
+import TimeEntries from '../components/TimeEntries'
+import Login from '../components/login'
+import Register from '../components/reg'
 Vue.use(Router)
 
 export default new Router({
@@ -14,6 +16,13 @@ export default new Router({
   path : '/home',
   component : Home
 },{
+  path : '/login',
+  component : Login
+},{
+  path : '/register',
+  component : Register
+}
+,{
   path : '/time-entries',
   component : TimeEntries,
     children : [{

@@ -8,6 +8,7 @@ import actions from './actions'
 Vue.use(Vuex);
 
 const state = {
+  loginstate:JSON.parse(sessionStorage.getItem('user')) || {},
   totalTime: 0,
   list: [{
     name : '二哲',

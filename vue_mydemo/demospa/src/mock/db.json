@@ -1,0 +1,31 @@
+{
+	"users": [
+		{
+			"id" : 1,
+			"username": "aaa",
+			"password": "aaa"
+		},
+		{
+			"id" : 2,
+			"username": "bbb",
+			"password": "bbb"
+		},
+		{
+			"id": 3,
+			"username": "ccc",
+			"password": "ccc"
+		}
+	],
+	"getBoardList": {
+        "logn":"0",
+        "msg": {
+            "name": "精灵",
+            "sign": "一只可爱的小精灵",
+            "src": "",
+            "phoneNub": "15120171717",
+            "six": "未知",
+            "job": "私人金融专家",
+            "add": "北京市 朝阳区 将台"
+        }
+    }	
+}

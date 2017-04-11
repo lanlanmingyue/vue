@@ -21,6 +21,23 @@ var autoOpenBrowser = !!config.dev.autoOpenBrowser
 var proxyTable = config.dev.proxyTable
 
 var app = express()
+//mock模拟数据
+// 本地json-server服务器搭建代码
+// 引入数据库文件
+var appData = require('../src/mock/db.json')
+// 引入数据库
+var getBoardList = appData.getBoardList //在appData定义了这一个接口数据。
+var apiRoutes = express.Router()
+// 使用api的方法来创建连接时候的请求
+apiRoutes.post('/getBoardList', function (req, res) {
+  res.json({
+    errno: 0 ,
+    data: getBoardList
+  });
+})
+// 调用api
+app.use('/api', apiRoutes)
+//mock end
 var compiler = webpack(webpackConfig)
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {

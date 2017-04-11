@@ -14,5 +14,11 @@ export default {
   },
   deletePlan({ commit }, plan) {
     commit(types.DELETE_PLAN, plan)
-  }
+  },
+  userSignin({commit}, user) {
+            commit(types.USER_SIGNIN, user)
+        },
+  userSignout({commit}) {
+            commit(types.USER_SIGNOUT)
+        }
 };

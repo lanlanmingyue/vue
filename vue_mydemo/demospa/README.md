@@ -47,3 +47,7 @@ actions 则可以编写异步的逻辑或者是一些逻辑，再去commit
 
 #this.$store.dispatch('savePlan', plan)当执行了这样的方法就会调用actions.js里的savePlan方法，而savePlan又会触发 mutations里的 types.SAVE_PLAN 最后修改数据视图更新
 #在这有个技巧就是，在mutations里都是用大写下划线连接，而我们的actions里都用小写驼峰对应。
+
+#登录注册 逻辑待做
+
+#模拟数据已搞通，axios待研究[http://www.cnblogs.com/jasonwang2y60/p/6498802.html]{http://www.cnblogs.com/jasonwang2y60/p/6498802.html}

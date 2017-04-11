@@ -2,7 +2,12 @@
 <!-- // src/components/TimeEntries.vue
  -->
 <template>
-  <div>
+<div class="container">
+  <div class="col-sm-3">
+      <sidebar></sidebar>
+      </div>
+      <div class="col-sm-9">
+           <div>
    <!--  //`v-if`是vue的一个指令
    //`$route.path`是当前路由对象的路径，会被解析为绝对路径当
    //`$route.path !== '/time-entries/log-time'`为`true`是显示，`false`，为不显示。
@@ -76,10 +81,15 @@
       </div>
     </div>
   </div>
+      </div>
+    </div>
+</div>
 </template>
 <script>
+  import Sidebar from '../components/Sidebar.vue'
     export default {
         name : 'TimeEntries',
+        components: { 'sidebar': Sidebar },
         computed : {
           plans () {
             // 从store中取出数据
