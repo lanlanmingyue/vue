@@ -12,3 +12,5 @@ export const USER_SIGNIN = 'USER_SIGNIN' ;//登录成功
 export const USER_SIGNOUT = 'USER_SIGNOUT'; //退出登录
 
 export const  GET_BASE_API = 'GET_BASE_API'; //我的基本测试api
+export const  SET_LOADING = 'SET_LOADING';
+

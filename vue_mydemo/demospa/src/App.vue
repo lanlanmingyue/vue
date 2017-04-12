@@ -1,7 +1,5 @@
-// src/App.vue
-
 <template>
-  <div id="wrapper">
+   <div id="wrapper">
     <nav class="navbar navbar-default">
       <div class="container">
         <a class="navbar-brand" href="#">
@@ -18,8 +16,9 @@
         </ul>
       </div>
     </nav>
-        <router-view></router-view>
-  </div>
+    <router-view></router-view>
+    <div v-if="isLoading" class="load-div"><img src="./assets/images/loading.gif"  alt=""></div>
+   </div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
@@ -35,26 +34,30 @@ import {mapGetters} from 'vuex'
     computed: {
     ...mapGetters([
       'getMineBaseMsg'
-    ])
+    ]),
+    isLoading:function(){
+       return this.$store.getters.getloading;
+    }
   },
     mounted() {
-        // console.log("mounted")
-        // axios.post('/api/posts', {
-        // }).then(
-        //     m=>console.log(m.data)
-        // );
-   /* this.$http.post('/api/getBoardList')
-    .then(function (response) {
-      console.log(response.data.data);
-      alert('成功了');
-    })
-    .catch(function (code) {
-      alert('失败了');
-      console.log(code);
-    });*/
     },
     created() {
     this.$store.dispatch('getMineBaseApi');
   }
 }
 </script>
+<style>
+  .load-div{
+    width:3rem;
+  height:3rem;
+  position:fixed;
+  top:50%;
+  left:50%;
+  margin-top:-1.5rem;
+  margin-left:-1.5rem;
+  }
+  .load-div>img{
+    width: 100%;
+    display: block;
+  }
+</style>

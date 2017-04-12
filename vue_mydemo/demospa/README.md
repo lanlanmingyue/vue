@@ -55,3 +55,6 @@ actions 则可以编写异步的逻辑或者是一些逻辑，再去commit
 #在组件的created中提交dispatch，然后通过action调用一个封装好的axios然后再触发mutation来提交状态改变state中的数据，然后在组件的计算属性中获取state的数据并渲染在页面上
 
 #数据state action mutation getter 以及异步数据axios 参考地址[http://www.cnblogs.com/jasonwang2y60/p/6606822.html]
+
+相关知识点：
+method有触发则执行函数，而computed基于依赖缓存，只要相关值不变，那么就不必再执行函数。

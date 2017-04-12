@@ -2,6 +2,10 @@
 import * as types from './mutation-types'
 
 export default {
+  // 设置是否在加载
+  [types.SET_LOADING] (state, platform) {
+    state.isLoading = platform;
+  },
     // 增加总时间
   [types.ADD_TOTAL_TIME] (state, time) {
     state.totalTime = state.totalTime + time

@@ -5,6 +5,10 @@ import api from './../fetch/api';
 
 
 export default {
+  // 改变是否正在加载状态
+  setLoading ({commit}, platform) {
+    commit('SET_LOADING', platform);
+  },
   addTotalTime({ commit }, time) {
     commit(types.ADD_TOTAL_TIME, time)
   },

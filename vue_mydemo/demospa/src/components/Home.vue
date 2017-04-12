@@ -20,5 +20,17 @@
 	import Sidebar from '../components/Sidebar.vue'
 	export default {
     components: { 'sidebar': Sidebar },
+    mounted(){
+    	// 设置当前状态为加载中
+    this.$store.dispatch('setLoading', true);
+    // 模拟请求等待
+    var time = Math.floor(Math.random() * 2000);
+    console.log('模拟加载用时' + time);
+    setTimeout(() => {
+      // 页面显示
+      this.$store.dispatch('setLoading', false);
+      this.showMe = true;
+    }, time);
+    }
   }
 </script>
