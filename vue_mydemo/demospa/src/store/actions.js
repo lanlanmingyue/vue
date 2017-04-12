@@ -1,6 +1,8 @@
 // src/store/actions.js
 
 import * as types from './mutation-types'
+import api from './../fetch/api';
+
 
 export default {
   addTotalTime({ commit }, time) {
@@ -20,5 +22,13 @@ export default {
         },
   userSignout({commit}) {
             commit(types.USER_SIGNOUT)
-        }
+        },
+  getMineBaseApi({commit}) {
+    console.log('进入action01');
+    api.mineBaseMsgApi()
+    .then(res => {
+        console.log('action中调用封装后的axios成功')
+        commit(types.GET_BASE_API, res)
+    })
+  }
 };

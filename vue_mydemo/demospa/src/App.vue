@@ -22,18 +22,28 @@
   </div>
 </template>
 <script>
-//import axios from 'axios'
+import {mapGetters} from 'vuex'
     export default {
     name: 'app',
+    data:function(){
+      return {
+
+      }
+    },
     components: {
     },
+    computed: {
+    ...mapGetters([
+      'getMineBaseMsg'
+    ])
+  },
     mounted() {
         // console.log("mounted")
         // axios.post('/api/posts', {
         // }).then(
         //     m=>console.log(m.data)
         // );
-    this.$http.post('/api/getBoardList')
+   /* this.$http.post('/api/getBoardList')
     .then(function (response) {
       console.log(response.data.data);
       alert('成功了');
@@ -41,7 +51,10 @@
     .catch(function (code) {
       alert('失败了');
       console.log(code);
-    });
-    }
+    });*/
+    },
+    created() {
+    this.$store.dispatch('getMineBaseApi');
+  }
 }
 </script>

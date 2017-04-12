@@ -43,5 +43,12 @@ export default {
             /*
             此行解释为： 获取对象的所有属性后，遍历这些属性，并删除
             */
-        }
+        },
+        [types.GET_BASE_API](state, res) {
+    console.log('进入mutation11');
+    console.log(res.data.msg);
+    state.getMineBaseMsg = { ...state.getMineBaseMsg, msg: res.data.msg }
+    console.log('进入mutations修改state成功');
+    console.log(state.getMineBaseMsg)
+  }
 };
