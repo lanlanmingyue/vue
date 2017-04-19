@@ -10,43 +10,52 @@
           <li><router-link to="/home">首页</router-link></li>
           <li><router-link to="/time-entries">计划列表</router-link></li>
         </ul>
-          <ul class="nav navbar-nav navbar-right">
+        <ul class="nav navbar-nav navbar-right" v-if="!user.username">
           <li><router-link to="/login">登录</router-link></li>
           <li><router-link to="/register">注册</router-link></li>
+        </ul>
+         <ul class="nav navbar-nav navbar-right" v-else>
+          <li><span>欢迎您，{{user.username}}!</span></li>
+          <li><router-link to="/signout">退出</router-link>
+         <!--  <span class="btn"  v-on:click="signout()">退出</span> --></li>
         </ul>
       </div>
     </nav>
     <router-view></router-view>
-    <div v-if="isLoading" class="load-div"><img src="./assets/images/loading.gif"  alt=""></div>
+    <div v-if="getloading" class="load-div"><img src="./assets/images/loading.gif"  alt=""></div>
    </div>
 </template>
 <script>
-import {mapGetters} from 'vuex'
+import {mapGetters,mapState,mapActions} from 'vuex';
     export default {
     name: 'app',
     data:function(){
       return {
-
+          user:{
+            "id" : this.$store.getters.userInfo.id,
+            "username": this.$store.getters.userInfo.username,
+          }
       }
     },
     components: {
     },
     computed: {
     ...mapGetters([
-      'getMineBaseMsg'
-    ]),
-    isLoading:function(){
-       return this.$store.getters.getloading;
-    }
+      'getMineBaseMsg',
+      'userInfo',
+      'getloading',
+    ])
   },
+
     mounted() {
+        console.log(this.user.username);
     },
     created() {
     this.$store.dispatch('getMineBaseApi');
-  }
+    }
 }
 </script>
-<style>
+<style scoped>
   .load-div{
     width:3rem;
   height:3rem;
@@ -59,5 +68,14 @@ import {mapGetters} from 'vuex'
   .load-div>img{
     width: 100%;
     display: block;
+  }
+  .navbar-nav>li>span{
+    display: block;
+    padding:  15px;
+    line-height: 20px;
+    color: #777;
+  }
+  .navbar-nav>li>span.btn{
+    cursor: pointer;
   }
 </style>

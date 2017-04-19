@@ -7,7 +7,7 @@
           <div class="col-xs-12">
             <div class="control-wrapper">
               <label for="username" class="control-label fa-label"><i class="fa fa-user fa-medium"></i></label>
-              <input type="text" class="form-control" id="username" placeholder="用户名" v-model="user.name">
+              <input type="text" class="form-control" id="username" placeholder="用户名" v-model="user.username">
             </div>
           </div>
         </div>
@@ -31,24 +31,28 @@
 </template>
 
 <script>
-  import { mapActions } from 'vuex'
+  import { mapActions ,mapState} from 'vuex'
   export default {
     data (){
       return {
         user: {
-          name: '',
+          id: '',
+          username: '',
           password: ''
         }
       }
     },
     computed: {
-      ...mapActions({
-        UserLogin: 'UserLogin',
-      })
+      ...mapActions([
+        'userSignin'
+      ])
     },
     methods:{
       sub(){
-        this.$store.dispatch('UserLogin', this.user);
+        //console.log(this.user.username);
+        if(!this.user.username || !this.user.password) return;
+         this.$store.dispatch('userSignin', this.user);
+         this.$router.replace({ path: '/home' })
       }
     }
   }

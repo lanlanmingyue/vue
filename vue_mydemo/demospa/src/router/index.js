@@ -6,6 +6,7 @@ import Home from '../components/Home'
 import TimeEntries from '../components/TimeEntries'
 import Login from '../components/login'
 import Register from '../components/reg'
+import signout from '../components/views/signout.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -21,6 +22,9 @@ export default new Router({
 },{
   path : '/register',
   component : Register
+},{
+  path : '/signout',
+  component : signout
 }
 ,{
   path : '/time-entries',

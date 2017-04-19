@@ -5,6 +5,12 @@ import api from './../fetch/api';
 
 
 export default {
+   userSignin({commit}, user) {
+            commit(types.USER_SIGNIN, user)
+        },
+  userSignout({commit}) {
+            commit(types.USER_SIGNOUT)
+        },
   // 改变是否正在加载状态
   setLoading ({commit}, platform) {
     commit('SET_LOADING', platform);
@@ -21,12 +27,6 @@ export default {
   deletePlan({ commit }, plan) {
     commit(types.DELETE_PLAN, plan)
   },
-  userSignin({commit}, user) {
-            commit(types.USER_SIGNIN, user)
-        },
-  userSignout({commit}) {
-            commit(types.USER_SIGNOUT)
-        },
   getMineBaseApi({commit}) {
     console.log('进入action01');
     api.mineBaseMsgApi()

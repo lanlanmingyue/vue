@@ -25,9 +25,11 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 #1.使用vue-cli创建项目
 2.使用vue-router实现单页路由
 3.用vuex管理我们的数据流
-4.使用vue-resource请求我们的node服务端
+4.使用vue-resource(或者axios)请求我们的node服务端
 5.使用.vue文件进行组件化的开发
 PS：本文node v6.2.2 npm v3.9.5 vue v2.1.0 vue-router v2.0.3 vuex v2.0.0
+
+模块：加载中，
 
 #webpack作用：模块打包，预处理，热加载
 
@@ -57,4 +59,36 @@ actions 则可以编写异步的逻辑或者是一些逻辑，再去commit
 #数据state action mutation getter 以及异步数据axios 参考地址[http://www.cnblogs.com/jasonwang2y60/p/6606822.html]
 
 相关知识点：
-method有触发则执行函数，而computed基于依赖缓存，只要相关值不变，那么就不必再执行函数。
+method有触发则执行函数，而computed基于依赖缓存，只要相关值不变，那么就不必再执行函数，若相关值改变，则自动执行函数。
+--超链接：<router-link slot="right" to="/link">超链接</router-link>
+------------&&&&登录与注册&&&&------------
+首页：computed: mapState({ user: state => state.user })
+退出：...mapActions([USER_SIGNOUT]),
+            submit() {
+                this.USER_SIGNOUT()
+				this.$router.replace({ path: '/login' })
+            }
+登录界面：...mapActions([USER_SIGNIN]),
+			submit() {
+				this.btn = true
+				if(!this.form.id || !this.form.name) return
+				this.USER_SIGNIN(this.form)
+				this.$router.replace({ path: '/home' })
+			}
+ // 全局导航钩子用法待研究
+ router.beforeEach(
+
+ ------
+ user() {
+					return this.$store.state.user
+				}
+mapState({ user: state => state.user }),
+
+-----
+...mapGetters([
+      'getMineBaseMsg',
+      'isLogin',
+      'getloading'
+    ])
+    相当于依次展开
+getloading ：function(){return this.$store.getters.getloading;}

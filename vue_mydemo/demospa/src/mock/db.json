@@ -16,7 +16,7 @@
 			"password": "ccc"
 		}
 	],
-	"getBoardList": {
+	"getBoardList": [{
         "logn":"0",
         "msg": {
             "name": "精灵",
@@ -27,5 +27,5 @@
             "job": "私人金融专家",
             "add": "北京市 朝阳区 将台"
         }
-    }	
+    }	]
 }

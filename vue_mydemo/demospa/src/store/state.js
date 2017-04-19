@@ -2,7 +2,8 @@
 export default {
   // 是否在加载中
   isLoading: false,
-  loginstate:JSON.parse(sessionStorage.getItem('user')) || {},
+  isLogin:false,
+  userInfo:JSON.parse(sessionStorage.getItem('user')) || {},
   totalTime: 0,
   list: [{
     name : '二哲',

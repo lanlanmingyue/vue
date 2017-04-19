@@ -2,6 +2,18 @@
 import * as types from './mutation-types'
 
 export default {
+  // 设置是否登录
+  [types.USER_SIGNIN](state, user) {
+  sessionStorage.setItem('user', JSON.stringify(user))
+   Object.assign(state.userInfo, user)//浅拷贝、对象属性的合并,改变state
+            console.log(state); 
+          },
+  // 设置是否退出
+  [types.USER_SIGNOUT](state) {
+    sessionStorage.removeItem('user')
+    console.log(state);
+    Object.keys(state).forEach(k => Vue.delete(state, k))
+  },
   // 设置是否在加载
   [types.SET_LOADING] (state, platform) {
     state.isLoading = platform;
@@ -28,27 +40,8 @@ export default {
     state.list.splice(idx, 1);
   }
 ,
-        [types.USER_SIGNIN](state, user) {
-            sessionStorage.setItem('user', JSON.stringify(user))
-            Object.assign(state, user)//浅拷贝、对象属性的合并,改变state
-        },
-        [types.USER_SIGNOUT](state) {
-            sessionStorage.removeItem('user')
-            Object.keys(state).forEach(k => Vue.delete(state, k))
-            //[].forEach(function(value, index, array) {  // ...});
-            /*[1, 2 ,3, 4].forEach(alert);相当于如下
-                var array = [1, 2, 3, 4];
-                for (var k = 0, length = array.length; k < length; k++)
-                { alert(array[k]);}
-            */
-            /*
-            Obeject.keys() //获取对象的所有属性
-            */
-            /*
-            此行解释为： 获取对象的所有属性后，遍历这些属性，并删除
-            */
-        },
-        [types.GET_BASE_API](state, res) {
+      
+  [types.GET_BASE_API](state, res) {
     console.log('进入mutation11');
     console.log(res.data.msg);
     state.getMineBaseMsg = { ...state.getMineBaseMsg, msg: res.data.msg }
