@@ -18,14 +18,14 @@
 <script>
     import { mapActions } from 'vuex'
     export default {
-   computed: {
-    ...mapActions([
-      'userSignout'
-    ])
-  },
+		   computed: {
+		    ...mapActions([
+		      'userSignout'
+		    ])
+		  },
         methods: {
             submit() {
-            	this.$store.dispatch("userSignout");
+            	this.$store.dispatch('userSignout');
 				this.$router.replace({ path: '/login' })
             }
         }

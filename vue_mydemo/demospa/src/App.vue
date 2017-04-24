@@ -26,29 +26,25 @@
    </div>
 </template>
 <script>
-import {mapGetters,mapState,mapActions} from 'vuex';
+import {mapGetters,mapState} from 'vuex';
     export default {
     name: 'app',
     data:function(){
       return {
-          user:{
-            "id" : this.$store.getters.userInfo.id,
-            "username": this.$store.getters.userInfo.username,
-          }
+          
       }
     },
     components: {
     },
     computed: {
+    ...mapState({ user: state => state.userInfo }), //即时拿到登录信息
     ...mapGetters([
-      'getMineBaseMsg',
-      'userInfo',
-      'getloading',
+      'getMineBaseMsg', 
+      'getloading'
     ])
-  },
-
+  }, 
     mounted() {
-        console.log(this.user.username);
+        console.log("登录名"+this.user.username);
     },
     created() {
     this.$store.dispatch('getMineBaseApi');

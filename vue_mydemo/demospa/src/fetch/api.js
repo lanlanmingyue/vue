@@ -20,5 +20,9 @@ export default {
   mineBaseMsgApi() {
      console.log('进入api.js-02')
     return fetch('/api/getBoardList');
+  },
+  usersApi() {
+     console.log('进入api.js-users')
+    return fetch('/api/users');
   }
 }

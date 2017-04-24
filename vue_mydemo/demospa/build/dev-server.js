@@ -36,7 +36,22 @@ apiRoutes.post('/getBoardList', function (req, res) {
   });
 })
 // 调用api
-app.use('/api', apiRoutes)
+//app.use('/api', apiRoutes);
+
+//第二个接口
+// 引入数据库
+var users = appData.users //在appData定义了这一个接口数据。
+//var apiRoutes = express.Router()
+// 使用api的方法来创建连接时候的请求
+apiRoutes.post('/users', function (req, res) {
+  res.json({
+    errno: 0 ,
+    data: users
+  });
+})
+// 调用api
+app.use('/api', apiRoutes);
+
 //mock end
 var compiler = webpack(webpackConfig)
 

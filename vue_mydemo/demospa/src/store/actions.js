@@ -6,7 +6,12 @@ import api from './../fetch/api';
 
 export default {
    userSignin({commit}, user) {
-            commit(types.USER_SIGNIN, user)
+    /*api.usersApi()
+    .then(res => {
+        console.log('usersApi的axios成功')
+        
+    })*/
+    commit(types.USER_SIGNIN, user)
         },
   userSignout({commit}) {
             commit(types.USER_SIGNOUT)

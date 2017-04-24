@@ -1,4 +1,5 @@
 // src/store/mutations.js
+import Vue from 'vue'
 import * as types from './mutation-types'
 
 export default {
@@ -6,13 +7,15 @@ export default {
   [types.USER_SIGNIN](state, user) {
   sessionStorage.setItem('user', JSON.stringify(user))
    Object.assign(state.userInfo, user)//浅拷贝、对象属性的合并,改变state
-            console.log(state); 
           },
   // 设置是否退出
   [types.USER_SIGNOUT](state) {
     sessionStorage.removeItem('user')
     console.log(state);
-    Object.keys(state).forEach(k => Vue.delete(state, k))
+    //Object.keys(state).forEach(k => Vue.delete(state, k))
+     /*
+            此行解释为： 获取对象的所有属性后，遍历这些属性，并删除
+            */
   },
   // 设置是否在加载
   [types.SET_LOADING] (state, platform) {
