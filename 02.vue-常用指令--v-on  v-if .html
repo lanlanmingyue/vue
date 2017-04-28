@@ -62,6 +62,11 @@
                               </td>
                        </template>
                     </tr>
+                    <h1 v-if="age >= 25">Age: {{ age }}</h1>
+                    <h1 v-else>Name: {{ name }}</h1>
+                    <h1>---------------------if练习分割线---------------------</h1>
+                    <h1 v-show="message.indexOf('hello') >= 0">message: {{ message }}</h1>
+                    <h1 v-else>message: {{ message }}v-else</h1>
                       <!-- v-if   在这里结束，这个模块要多练习-->
                       <!-- 过滤器 的使用-->
                       <h3>过滤器的使用</h3>
@@ -86,7 +91,7 @@
                         //观察书籍列表v-for数据列表渲染那里
                         addBook:function () {
                                 //计算书的id
-                                this.book.id = this.books.length + 1;
+                                this.book.id = this.books[this.books.length-1].id + 1;
                                 this.books.push(this.book);
                                 //将input中的数据重置
                                 this.book = '';
@@ -94,11 +99,14 @@
                         //删除按钮
                         //vue.js为数组扩展了$remove方法，查找并删除我们作为参数传递过去的book。
                         delBook:function(book){
+                          //this.books.splice(index,1);
                                this.books.$remove(book);
                         }
 
              },
             data: {
+              age: 26,
+              name:'testname',
             message:"hello,vue!",
             book: {
                 id: 0,

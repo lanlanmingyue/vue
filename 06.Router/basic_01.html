@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>简易的路由页面</title>
+		<link rel="stylesheet" href="../vue_lib/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="assets/css/custom.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="page-header">
+						<h2>Router Basic - 01</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-2">
+					<ul class="list-group">
+						<!--使用指令v-link进行导航-->
+						<router-link to="/home" class="list-group-item">Home</router-link>
+						<router-link to="/about" class="list-group-item">About</router-link>
+					
+					</ul>
+				</div>
+				<div class="col-xs-6">
+					<div class="panel">
+						<div class="panel-body">
+							<!--用于渲染匹配的组件-->
+							<router-view></router-view>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<template id="home">
+			<div>
+				<h1>Home</h1>
+				<p>{{msg}}</p>
+			</div>
+		</template>
+		<template id="about">
+			<div>
+				<h1>About</h1>
+				<p>This is the tutorial about vue-router.</p>
+			</div>
+		</template>
+	</body>
+		<script src="../vue_lib/vue.min.js"></script>
+		<script src="../vue_lib/vue-router.min.js"></script>
+	  <script>
+  //定义组件eleven
+ 		var Home = Vue.extend({
+			template: '#home',
+			data: function() {
+				return {
+					msg: 'Hello, vue router!'
+				}
+			}
+		})
+
+		var About = Vue.extend({
+			template: '#about'
+		})
+		// 定义路由
+		const routes = [{
+			path : '/',
+			component : Home
+		},
+		{
+			path : '/home',
+			component : Home
+		},{
+			path : '/about',
+			component : About
+		}];
+
+		const router = new VueRouter({
+			routes
+		});
+
+  //挂载路由
+    var app = new Vue({         
+      el: '#app',   
+      router,        
+      data: {                   
+        //number: '1', 
+      },
+      mounted: function() {  
+        //  
+        console.log('加载完成');
+      },  
+      methods: {  
+          
+      },
+      components: {
+            'Home': Home,
+            'About':About
+        }
+    });
+
+    /*挂载路由第二种方法
+           const vm = new Vue({
+            router: router
+        }).$mount('#app');
+
+    */
+  </script>
+
+</html>

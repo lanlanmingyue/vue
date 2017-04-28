@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../vue_lib/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="assets/css/custom.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="page-header">
+						<h2>Router Basic - 06</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-2">
+					<div class="list-group">
+						<a class="list-group-item" v-link="{ path: '/home', activeClass: 'active'}">Home</a>
+						<a class="list-group-item" v-link="{ path: '/about', activeClass: 'active'}">About</a>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="panel">
+						<div class="panel-body">
+							<router-view></router-view>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="well">
+						{{{ msg }}}
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<template id="home">
+			<div>
+				<h1>Home</h1>
+				<p>{{msg}}</p>
+			</div>
+			<div>
+				<ul class="nav nav-tabs">
+					<li :class="path == '/home/news' ? 'active': ''">
+					<router-link to="/home/news" >News</router-link>
+					</li>
+					<li :class="path == '/home/message' ? 'active': ''">
+						<router-link to="/home/message" >Messages</router-link>
+					</li>
+				</ul>
+				<router-view></router-view>
+			</div>
+		</template>
+
+		<template id="about">
+			<div>
+				<h1>About</h1>
+				<p>This is the tutorial about vue-router.</p>
+			</div>
+		</template>
+
+		<template id="news">
+			<div>
+				<ul>
+					<li>News 01</li>
+					<li>News 02</li>
+					<li>News 03</li>
+				</ul>
+			</div>
+		</template>
+		<template id="message">
+			<ul>
+				<li>Message 01</li>
+				<li>Message 02</li>
+				<li>Message 03</li>
+			</ul>
+		</template>
+	</body>
+	<script src="../vue_lib/vue.min.js"></script>
+	<script src="../vue_lib/vue-router.min.js"></script>
+	<script>
+	
+		var well = new Vue({
+			el: '.well',
+			data: {
+				msg: '',
+				color: '#ff0000'
+			},
+			methods: {
+				setColor: function(){
+					this.color = '#' + parseInt(Math.random()*256).toString(16)
+								+ parseInt(Math.random()*256).toString(16)
+								+ parseInt(Math.random()*256).toString(16)
+				},
+				setColoredMessage: function(msg){
+					this.msg +=  '<p style="color: ' + this.color + '">' + msg + '</p>'
+				},
+				setTitle: function(title){
+					this.msg =  '<h2 style="color: #333">' + title + '</h2>'
+				}
+			}
+		})
+	
+		function RouteHelper(name) {
+			var route = {
+				canReuse: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:canReuse')
+					return true
+				},
+				canActivate: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:canActivate')
+					transition.next()
+				},
+				activate: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:activate')
+					transition.next()
+				},
+				canDeactivate: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:canDeactivate')
+					transition.next()
+				},
+				deactivate: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:deactivate')
+					transition.next()
+				},
+				data: function(transition) {
+					well.setColoredMessage('执行组件' + name + '的钩子函数:data')
+					transition.next()
+				}
+			}
+			return route;
+		}
+		
+		var Home = Vue.extend({
+			template: '#home',
+			data: function() {
+				return {
+					msg: 'Hello, vue router!',
+					path: ''
+				}
+			},
+			route: RouteHelper('Home')
+		})
+
+		var News = Vue.extend({
+			template: '#news',
+			route: RouteHelper('News')
+		})
+
+		var Message = Vue.extend({
+			template: '#message',
+			route: RouteHelper('Message')
+		})
+
+		var About = Vue.extend({
+			template: '#about',
+			route: RouteHelper('About')
+		})
+
+// 定义路由
+		const routes = [{
+			path : '/',
+			component : Home
+		},
+		{
+			path : '/home',
+			component : Home,
+			children: [{
+	          path: 'news', //注意子组件里不带‘/‘斜杠
+	          component: News,
+	        },
+	        {
+	          path: 'message',
+	          component: Message
+	        }]
+		},{
+			path : '/about',
+			component : About
+		}];
+
+		const router = new VueRouter({
+			routes
+		});
+		
+		router.beforeEach(function(transition) {
+			well.setColor()
+			well.setTitle('跳转路径<span class="text-danger">[from = ' + transition.from.path + '], [to = ' + transition.to.path + ']</span>')
+			well.setColoredMessage('执行router的全局函数:beforeEach')
+			transition.next()
+		})
+
+		router.afterEach(function(transition) {
+			well.setColoredMessage('执行router的全局函数:afterEach')
+		})
+
+		 var app = new Vue({         
+      el: '#app',   
+      router,        
+      data: {                   
+        //number: '1', 
+      },
+      mounted: function() {  
+        //  
+        console.log('加载完成');
+      },  
+      methods: {  
+          
+      },
+      components: {
+      	   'Home': Home,
+            'About':About,
+            'News':News,
+            'Message':Message,
+          well
+        }
+    });
+	</script>
+
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>路由嵌套之子组件2层嵌套</title>
+		<link rel="stylesheet" href="../vue_lib/bootstrap/css/bootstrap.min.css"/>
+		<link rel="stylesheet" href="assets/css/custom.css" />
+	</head>
+
+	<body>
+		<div id="app">
+			<div class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="page-header">
+						<h2>Router Basic - 04-{{ $route.params.id }}</h2>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-2">
+					<div class="list-group">
+						<router-link to="/home" class="list-group-item">Home</router-link>
+						<router-link to="/about" class="list-group-item">About</router-link>
+					</div>
+				</div>
+				<div class="col-xs-6">
+					<div class="panel">
+						<div class="panel-body">
+							<router-view></router-view>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+				<div class="col-xs-offset-2 col-xs-8">
+					<div class="well">
+						<p>当前路径：<code>{{$route.path}}</code></p>
+						<p>当前参数：<code>{{$route.params }}</code></p>
+						<p>路由名称：<code>{{$route.name}}</code></p>
+						<p>路由查询参数：<code>{{$route.query }}</code></p>
+						<!--<p>路由匹配项：<code>{{$route.matched | json}}</code></p>-->
+					</div>
+				</div>
+			</div>
+			</div>
+		</div>
+
+		<template id="home">
+			<div>
+				<div>
+					<h1>Home</h1>
+					<p>{{msg}}</p>
+				</div>
+				<div>
+					<ul class="nav nav-tabs">
+						<li>
+						<router-link to="/home/news" >News</router-link>
+						</li>
+						<li>
+						<router-link to="/home/message" >Messages</router-link>
+						</li>
+					</ul>
+					<router-view></router-view>
+				</div>
+			</div>
+		</template>
+
+			<template id="news">
+			<div>
+				<ul>
+					<li>
+					<router-link to="/home/news/detail/01?favorite=yes" >News</router-link>				
+					</li>
+					<li>
+						<a href="javascript:void(0)" @click="viewDetail" >News 02</a>	
+					</li>
+					<li>
+						<router-link to="/home/news/detail/03" >News 03</router-link>	
+					</li>
+				</ul>
+				<div>
+					<router-view></router-view>
+				</div>
+			</div>
+		</template>
+		<template id="newsDetail">
+			<div>
+				News Detail - {{$route.params.id}} ......
+			</div>
+		</template>
+		<template id="message">
+			<ul>
+				<li>Message 01</li>
+				<li>Message 02</li>
+				<li>Message 03</li>
+			</ul>
+		</template>
+
+		<template id="about">
+			<div>
+				<h1>About</h1>
+				<p>This is the tutorial about vue-router.</p>
+			</div>
+		</template>
+
+	</body>
+	<script src="../vue_lib/vue.min.js"></script>
+	<script src="../vue_lib/vue-router.min.js"></script>
+	<script>
+		var Home = Vue.extend({
+			template: '#home',
+			data: function() {
+				return {
+					msg: 'Hello, vue router!'
+				}
+			}
+		})
+	var News = Vue.extend({
+			template: '#news',
+			methods: {
+				viewDetail: function() {
+					console.log(this.$route);
+					//this.$route.router.push({ name: 'detail05', params: { id: '02' }})
+					//这句话有问题，待研究router.push
+				}
+			}
+		})
+		var NewsDetail = Vue.extend({
+			template: '#newsDetail'
+		})
+
+		var Message = Vue.extend({
+			template: '#message'
+		})
+
+		var About = Vue.extend({
+			template: '#about'
+		})
+
+// 定义路由
+		const routes = [{
+			name:'home',
+			path : '/',
+			component : Home
+		},
+		{
+			name:'home',
+			path : '/home',
+			component : Home,
+			children: [{
+				name:'news',
+	          path: 'news', //注意子组件里不带‘/‘斜杠
+	          component: News,
+	          children:[{
+	          			name:'detail',
+						path: 'detail/:id',
+						component: NewsDetail
+	          }]
+	        },
+	        {
+	        		name:'message',
+	          path: 'message',
+	          component: Message
+	        }]
+		},{
+			name:'about',
+			path : '/about',
+			component : About
+		}];
+
+		const router = new VueRouter({
+			routes
+		});
+
+
+
+
+
+		 //挂载路由
+    var app = new Vue({         
+      el: '#app',   
+      router,        
+      data: {                   
+        //number: '1', 
+      },
+      mounted: function() {  
+        //  
+        console.log('加载完成');
+      },  
+      methods: {
+				
+			},
+      components: {
+            'Home': Home,
+            'About':About,
+            'News':News,
+            'Message':Message,
+            NewsDetail
+        }
+    });
+	</script>
+
+</html>
