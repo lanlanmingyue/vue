@@ -32,8 +32,15 @@
         }  
     },  
     watch: {  
-        'testDate.startTest': 'testMethod',
-        'testDate.endTest': 'testMethod'
+      /*  'testDate.startTest': 'testMethod',
+        'testDate.endTest': 'testMethod' //此为浅层次的监控*/
+        // 深层次的监控（即，对象的属性发生变化时，也进行监控）
+        handler:function(){
+            //要执行的任务
+            //通过修改store.state的方式来更新数据
+        },
+        //深度观察
+        deep:true
        }
       
     });
