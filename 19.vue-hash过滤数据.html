@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-hash数据过滤-查</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>  
+<!-- 一般用于订单状态或者任务状态等多情况下 -->
+    <div id="app">  
+        <ul>  
+            <li v-for="item in list">{{item.n}}</li>  
+        </ul>  
+        <ul>  
+            <li v-for="item in listCmputed">{{item.n}}</li>  
+        </ul>  
+        <ul>  
+            <li v-for="item in listMe(list)">{{item.n}}</li>  
+        </ul>
+        <div>
+        <!-- 利用hash进行数据过滤 此为hash地址变换按钮-->
+            <a href="#all">全部</a>
+            <a href="#unfinished">未完成</a>
+            <a href="#finished">已完成</a>
+            <!-- 此为输出列表内容 -->
+            <ul>
+                <li v-for="item in hashList">{{item.title}}</li>  
+            </ul>
+        </div>
+    </div>  
+</body>  
+    <script>  
+    var listText=[
+        {
+            title:"吃饭睡觉打豆豆",
+            isChecked:false  //状态为false为不选中，未完成
+        },
+          {
+            title:"吃饭222",
+            isChecked:false  //状态为false为不选中，未完成
+        },{
+            title:"读书",
+            isChecked:true  //状态为false为不选中，未完成
+        }
+        ,{
+            title:"跳舞4444",
+            isChecked:true  //状态为false为不选中，未完成
+        }
+    ];
+        var vmApp=new Vue({  
+            el:'#app',  
+            data:{  
+                list:[{n:11},{n:22},{n:33},{n:44},{n:55},{n:66}],
+                listText:listText,
+                visibility:"all"//通过这个属性值的变化，对数据进行筛选（hash）
+            },  
+            computed:{  
+                listCmputed:function(){  
+                    return this.list.filter(function(item){  
+                        return item.n>=33  
+                    })  
+                },
+                hashList:function(){
+                     var filterzzz = {
+                        all:function(list){
+                            return list;
+                        },
+                        finished:function(list){
+                            return list.filter(function(item){
+                                return item.isChecked;
+                            }); 
+                        },
+                         unfinished:function(list){
+                            return list.filter(function(item){
+                                return !item.isChecked;
+                            }); 
+                        }
+                    }
+                    //找到了过滤函数就返回过滤后的数据，没有找到，就返回所有数据
+                    return filterzzz[this.visibility]?filterzzz[this.visibility](listText):listText;
+                }
+            },  
+            methods:{  
+                listMe:function(list){  
+                     return list.filter(function(item){  
+                        return item.n<=33  
+                    })  
+                }  
+            }  
+        })  
+
+        function watchHashChage(){
+            var hash=window.location.hash.slice(1);
+            vmApp.visibility=hash; //这个app实例的visibility属性的值等于当前的hash值
+            // console.log(hash);
+        }
+        window.addEventListener("hashchange",watchHashChage);
+    </script>  
+
+</html>
