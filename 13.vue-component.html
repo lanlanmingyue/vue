@@ -7,6 +7,7 @@
 </head>
 <body>
 <p>component组件： Vue.component()</p>
+<p>组件：注册组件，引入组件，调用组件</p>
 <div id="app">
 <!-- 1.全局组件调用 -->
     <greeting></greeting>
@@ -20,24 +21,29 @@
     <post :title='title' :author='author' :content='content'></post>
 </div>
 <!-- 2.flexgreet组件内容 -->
- <template id="flexid">
-        <h1>template要放在</h1>
-        <h2>我是包含很多标签的组件</h2>
-        <h3>很好。是吗？</h3>
-        <h4>是的</h4>
-    </template>
+<template id="flexid">
+   <div>
+   <h1>template写的组件</h1>
+      <h2>我是包含很多标签的组件</h2>
+      <h3>很好。是吗？</h3>
+      <h4>是的</h4> 
+  </div>
+  
+</template>
     <!-- 3.props 传递数据 ，组件内容-->
     <template id="post-template">
-    <h1>{{ title }}</h1>
+    <div>
+            <h1>{{ title }}</h1>
     <h4>{{ author }}</h4>
     <p>{{ content }}</p>
+    </div>
 </template>
 </body>
  <script type="text/javascript" src="vue_lib/vue.min.js"></script>
 <script type="text/javascript">
 // 1.全局组件的写法，直接定义并使用
 Vue.component('greeting',{
-    template: '<h1>Welcome to coligo!</h1>'
+    template: '<h1>greeting,Welcome to coligo!</h1>'
 });
 // 2.定义组件flexgreet
 Vue.component('flexgreet',{
