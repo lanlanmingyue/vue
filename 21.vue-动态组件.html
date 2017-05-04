@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-component-动态组件</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>  
+<!-- 动态组件:<component :is="组件名"></component>-->
+<!-- <keep-alive>将组件包裹起来，则组件就会缓存，可以不用重新渲染 -->
+<div id="app"> 
+ <div>
+    <input type="button" name="" value="我是第一个组件" v-on:click="changeCus(1)">
+    <input type="button" name="" value="我是第二个组件"
+    v-on:click="changeCus(2)">
+    <input type="button" name="" value="我是第三个组件"
+    v-on:click="changeCus(3)">
+     <keep-alive>
+     <component :is="current"></component>
+     </keep-alive>
+ </div>
+</div>
+
+<template id="custom1">
+     <div>我是第一个组件</div>
+</template>
+</body>  
+    <script>  
+      // 注册子组件
+var custom1=Vue.component('custom1',{
+    template:'#custom1'
+})
+var custom2=Vue.component("custom2", {
+    template:"<div v-on:click='changeDivBg'>我是第二个组件</div>",
+    methods:{
+        changeDivBg(ev){
+            ev.target.style.background="pink"
+        }
+    }
+});
+var custom3=Vue.component("custom3", {
+    template:"<div>我是第三个组件</div>"
+});
+
+// 初始化父组件
+new Vue({
+    el: "#app",
+    data:function(){
+        return {
+            current:custom1
+        };
+    },
+    methods:{
+        changeCus:function(index){
+            //console.log(index);
+            if(index===1){
+                this.current="custom1"
+            }else if(index===2){
+                this.current="custom2"
+            }else if(index===3){
+                this.current="custom3"
+            }
+        }
+    }
+});
+    </script>  
+
+</html>
