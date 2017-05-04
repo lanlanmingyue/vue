@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习-slot内容分发</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+<body>  
+<!-- 父组件需要在子组件内放一些DOM，那么这些DOM是显示、不显示、在哪个地方显示、如何显示，就是slot分发负责的活-->
+<!-- 即  父组件相应的name的地方 去替代子组件同name的slot,并且会按子组件的顺序进行重新组合-->
+<!-- 用处:即某组件重用,但是不同的地方又需要特别使用时 -->
+<div id="app"> 
+ <div id="parent-template">
+    <child>
+        <!--此处是待分发的内容-->
+        <p slot="one">这是第一个坑</p>
+        <p slot="two">这是第二个坑</p>
+        <p>default-parent</p>
+         <p slot="three">这是第3个坑</p>
+    </child>
+    <div v-for="t in test">
+        <p v-for="val in t">{{val}}</p>
+    </div>
+</div>
+
+<template id="child-template">
+     <div>
+        <h1>内容被分发且重新组合</h1>
+        <slot>默认分发处</slot>
+        <slot name="two">这是two-slot</slot>
+        <slot name="one">这是one-slot</slot>
+        <button>
+            <slot name="three"></slot>
+            展示内容
+        </button>
+    </div>
+</template>
+</body>  
+    <script>  
+      // 注册子组件
+Vue.component("child", {
+    template:"#child-template"
+});
+
+// 初始化父组件
+new Vue({
+    el: "#parent-template",
+    data:function(){
+        return {
+            test: [[1.1,1.2],[2.1,2.1],[3.1,3.2]]
+        };
+    }
+});
+    </script>  
+
+</html>
