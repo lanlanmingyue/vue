@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>vue练习--Vue.set()--触发视图更新</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <style>
+        .disabled {
+          color: orange;
+        }
+    </style>
+</head>
+<body>
+<p></p>
+
+<div id="app">
+  <ul>
+    <li v-for="post in posts">{{post.title}}--{{post.votes}}</li>
+  </ul>
+  <!-- 2.输入框绑定 -->
+  <div id="comment-box">
+    <div class="input-group">
+      <!-- @keyup.enter 是vue的keyup监听事件，使之可以按输入，而不是只能按提交按钮
+    -->
+    <input type="text" class="form-control" placeholder="Enter a comment..." v-model="post" @keyup.enter="postComment">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" @click="postComment">Sumbit</button>
+    </span>
+  </div>
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="刷新数据"  v-model="postShuz"  @keyup.enter="postShua">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" @click="postShua">刷新某条数据</button>
+    </span>
+  </div>
+</div>
+</div>
+
+</body>
+ <script type="text/javascript" src="vue_lib/vue.min.js"></script>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#app',
+        data:{
+            posts:[{
+                title:'A post one',
+                votes:15
+            },{
+                title:'B post one',
+                votes:10
+            },{
+                title:'C post one',
+                votes:1
+            }],
+            post: "" ////2.输入框绑定,预先定义单个值
+        },
+        methods: {
+            //2.输入框绑定,定义事件
+             postComment: function() {
+              this.posts.push({
+                title: this.post,
+                votes: 0
+              })
+              this.post = ""; 
+            },
+            postShua:function(){
+              //Vue.set()更新数据列表。用上面postComment方法，无法更改已有列表数据
+              //Vue.set(a,b,c) a为要更改的列表，b为更改第几个元素，c为更改内容
+              Vue.set(this.posts,1,{
+                title: this.postShuz,
+                votes: 0
+              })
+              this.postShuz = ""; //2.这里是为了不改变输入框的placeholder的值
+            }
+        },
+        computed: {
+        }
+    });
+</script>
+</html>

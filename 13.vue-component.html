@@ -19,6 +19,7 @@
     子传父组件：需要声明自定义事件，父组件用$on监听自定义事件，$emit触发父组件所关心的自定义事件      
      -->
     <post :title='title' :author='author' :content='content'></post>
+    <my-component></my-component>
 </div>
 <!-- 2.flexgreet组件内容 -->
 <template id="flexid">
@@ -54,6 +55,18 @@ Vue.component('post',{
     template: '#post-template',
     props: ['title', 'author', 'content']
 })
+
+//4.利用components定义子组件
+var myComponentChild ={
+    template: '<h1>myComponentChild!</h1>'
+}
+var myComponent ={
+    template: '<h1>greeting,Welcome to myComponent!<my-component-child></my-component-child></h1>',
+    components:{
+        'my-component-child':myComponentChild
+    }
+}
+
     var vm = new Vue({
         el: '#app',
         data: {
@@ -65,6 +78,9 @@ Vue.component('post',{
         methods: {
         },
         computed: {
+        },
+        components:{
+            'my-component':myComponent
         }
     });
 </script>
