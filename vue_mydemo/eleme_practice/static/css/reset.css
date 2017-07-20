@@ -1,0 +1,157 @@
+/**
+ * Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+ * http://cssreset.com
+ */
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video, input {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-weight: normal;
+    vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, menu, nav, section {
+    display: block;
+}
+
+body{font-family:"microsoft yahei"!important; 
+font-size: 10px; line-height: 1.5; 
+overflow-x: hidden; 
+-webkit-overflow-scrolling: touch;
+-webkit-text-size-adjust: none;
+-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+/* custom */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+    width: 5px;
+    background-color: rgba(125, 125, 125, 0.7);
+    -webkit-border-radius: 6px;
+}
+
+html{width: 100%;-webkit-text-size-adjust: 100%; font-size: 62.5%;}
+a{background: transparent; text-decoration: none; -webkit-tap-highlight-color: transparent;}
+a:active{outline: 0;}
+img{border: 0;}
+h2,h3{font-weight: normal;}
+input{line-height: normal;outline: 0 none;-webkit-tap-highlight-color: transparent;font-family: "SimHei";}
+label{-webkit-tap-highlight-color: transparent;}
+input[type="button"],input[type="submit"],input[type="text"]{-webkit-appearance:none;}
+textarea{overflow: auto; resize: vertical;-webkit-appearance:none;}
+body{min-width: 320px;}
+ul,li{list-style: none;}
+
+.clb{clear:both;}
+.rel{position:relative;}
+.over-hidden{overflow:hidden;}
+.wrap{width:100%;}
+.mar-auto{margin:0 auto;}
+.abs{position:absolute;}
+
+.left{float:left;}
+.right{float:right;}
+.inline-b{display:inline-block;}
+.block-a{display: block;}
+input,textarea{
+    outline:none;
+    -webkit-tap-highlight-color:rgba(0, 0, 0, 0);
+    blr:expression(this.onFocus=this.blur());
+    -moz-tap-highlight-color:rgba(0, 0, 0, 0);
+    -o-tap-highlight-color:rgba(0, 0, 0, 0);
+    -ms-tap-highlight-color:rgba(0, 0, 0, 0);
+    border: none;
+    margin: 0;
+    padding: 0;
+}
+textarea{resize:none;}
+.mc1-input-width{width:100%;}
+select,input{-webkit-appearance:none;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);   }
+
+/**
+ * 閲嶆瀯 u, b, i, 鏍囩锛�
+*/
+u {
+    text-decoration: none;
+}
+
+b {
+    font-weight: normal;
+}
+
+i ,var{
+    font-style: normal;
+}
+/*
+ * 娓呴櫎娴姩绫� (hasLayout + Block Formatting Context)锛�
+ * http://nicolasgallagher.com/micro-clearfix-hack/
+*/
+.clearfix, .fix-clean {
+    *zoom: 1;
+}
+.clearfix:before, .fix-clean:before,
+.clearfix:after , .fix-clean:after {
+    content: " ";
+    display: table;
+}
+.clearfix:after, .fix-clean:after {
+    clear: both;
+}
+
+.width320{
+    width: 100%;
+}
+.width300{
+    width: 93.75%;
+}
+.width310{
+    width: 96.875%;
+}
+.width290{
+    width: 90.625%;
+}
+.banner-img{width: 100%;height: auto;display: block;}

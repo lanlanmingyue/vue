@@ -92,3 +92,7 @@ mapState({ user: state => state.user }),
     ])
     相当于依次展开
 getloading ：function(){return this.$store.getters.getloading;}
+
+
+state:叫做状态对象
+mutations:触发的状态
