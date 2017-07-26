@@ -17,7 +17,10 @@ export default {
   name: 'index',
     data () {
     return {
-      msg: 'Welcome to index.vue'
+      msg: 'Welcome to index.vue',
+      seller: {
+
+      }
     };
   },
   created () {

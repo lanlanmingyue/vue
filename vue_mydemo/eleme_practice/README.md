@@ -109,8 +109,30 @@ eg: props: {
 
 #elsint配置
 .eslintrc.js配置rules:'semi': ['error','always']
+
+#eslint删除验证
+webpack.base.conf.js中的          {
+        test: /\.(js|vue)$/,
+        loader: 'eslint-loader',
+        enforce: 'pre',
+        include: [resolve('src'), resolve('test')],
+        options: {
+          formatter: require('eslint-friendly-formatter')
+        }
+      },
+      删掉即可
+
 #安装sass
 npm install sass-loader --save-dev
+
+#零碎注意点：
+1.vue里img的路径不能直接 用src,要用v-bind:src简写成src，否则会报错</br>
+eg:<img  width="64" height="64" :src="seller.avatar" alt=""></br>
+2.通过异步获得的数据，起先的定义数据无值的话，要在循环调用处先判断存在不存在。v-if</br>
+3.两个元素display:inline-block对齐方法</br>
+原因：是因为中间有空格。解决方法：父元素：font-size:0 子元素定义字体大小
+4.字体与图片对齐，考虑字体对齐方式：vertical-align: top;
+
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
 [如何在项目中使用sass](http://www.w3cplus.com/preprocessor/how-to-create-project-with-sass.html)</br>
