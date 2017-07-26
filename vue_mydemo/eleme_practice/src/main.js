@@ -3,6 +3,11 @@
 import Vue from 'vue';
 import App from './components/index/index';
 import router from './router';
+import VueResource from 'vue-resource';
+
+import './common/sass/index.scss';
+
+Vue.use(VueResource);
 
 Vue.config.productionTip = false;
 

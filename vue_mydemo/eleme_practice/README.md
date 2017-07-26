@@ -68,7 +68,43 @@ qita:qita //数据就是上面定义的数据
 app.use('/api',apiRoutes);
 //mock模拟数据 end
 
-#项目实战-页面骨架开发-整体设计
+##项目实战-页面骨架开发-整体设计
+
+#SASS在项目中的使用
+安装：1，使用save会在package.json中自动添加。
+npm install node-sass --save-dev
+npm install sass-loader --save-dev
+
+#SASS的mixin使用
+@mixin border-1px($color){
+	border-bottom: 1px solid $color;
+}
+调用</br>
+引入并调用：
+ @include border-1px(#ccc);
+
+#简约路径配置，webpack.base.conf.js
+ alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': resolve('src')
+    }
+
+#vue-resource使用
+在package.json 里添加依赖"vue-resource": "^1.3.4"</br>
+import VueResource from 'vue-resource';</br>
+Vue.use(VueResource);</br>
+
+#父組件傳值給子組件
+父組件 index.vue中 <v-header :seller="seller"></v-header> </br>
+定義一個屬性:seller并賦值seller </br>
+
+子組件header.vue中，定義一個props接收數據seller,并定義其數據類型</br>
+eg: props: {
+      seller: {
+        type: Object
+      }
+    }
+
 
 
 #elsint配置
@@ -85,6 +121,8 @@ npm install sass-loader --save-dev
 #相关知识点：
 [flex布局]
 [vue-router](https://router.vuejs.org/zh-cn/)
+[vue引入sass报module not find问题](https://segmentfault.com/q/1010000008321697)
+[vue-resource](https://github.com/pagekit/vue-resource)
 
 #疑问
 当前页面切换路由的问题。vue中路由界面部分切换，与整体切换的关系

@@ -1,5 +1,7 @@
 <template>
-  <div class="header">header</div>
+  <div class="header">
+  	{{msg}}
+  </div>
 </template>
 
 <script>

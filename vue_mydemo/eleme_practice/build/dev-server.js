@@ -27,29 +27,29 @@ var appDate=require('./../data.json');
 var seller=appDate.seller;
 var apiRoutes=express.Router();
 
-apiRoutes.get('./seller',function(req,res){
+apiRoutes.get('/seller',function(req,res){
   res.json({
     error:0,
-    seller:seller
-  })
+    data:seller
+  });
 
-})
+});
 
 var goods=appDate.goods;
-apiRoutes.get('./goods',function(req,res){
+apiRoutes.get('/goods',function(req,res){
   res.json({
     error:0,
-    goods:goods
-  })
-})
+    data:goods
+  });
+});
 
 var ratings=appDate.ratings;
-apiRoutes.get('./ratings',function(){
+apiRoutes.get('/ratings',function(req,res){
   res.json({
     error:0,
-    ratings:ratings
-  })
-})
+    data:ratings
+  });
+});
 
 
 app.use('/api',apiRoutes);
