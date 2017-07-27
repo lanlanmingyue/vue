@@ -125,13 +125,25 @@ webpack.base.conf.js中的          {
 #安装sass
 npm install sass-loader --save-dev
 
+#不同情况的小图标调用：
+思路：动态绑定class,:class="类名"</br>
+相应的类名，写成一个数组  created(){
+    this.classMap=['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  }</br>
+  根据相应的type值，读取相对应的样式名。:class="classMap[seller.supports[0].type]"
+
+
+
 #零碎注意点：
 1.vue里img的路径不能直接 用src,要用v-bind:src简写成src，否则会报错</br>
 eg:<img  width="64" height="64" :src="seller.avatar" alt=""></br>
 2.通过异步获得的数据，起先的定义数据无值的话，要在循环调用处先判断存在不存在。v-if</br>
 3.两个元素display:inline-block对齐方法</br>
-原因：是因为中间有空格。解决方法：父元素：font-size:0 子元素定义字体大小
-4.字体与图片对齐，考虑字体对齐方式：vertical-align: top;
+原因：是因为中间有空格。解决方法：父元素：font-size:0 子元素定义字体大小</br>
+4.字体与图片对齐，考虑字体对齐方式：vertical-align: top;</br>
+5.模糊滤镜，[参考网址](http://www.w3cplus.com/css3/ten-effects-with-css3-filter)
+filter:blur(10px);</br>
+6.点击事件@click</br>
 
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>

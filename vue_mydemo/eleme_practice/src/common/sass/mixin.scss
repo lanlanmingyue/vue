@@ -24,3 +24,9 @@
 		background-image: url($url + "@3x.png")
 	}
 }
+
+@mixin text-overflow{
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+}

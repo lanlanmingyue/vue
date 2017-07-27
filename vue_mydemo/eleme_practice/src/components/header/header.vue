@@ -11,16 +11,28 @@
   				{{seller.description}}/{{seller.deliveryTime}}分钟送达
   			</div>
   			<div class="supports" v-if="seller.supports" >
-  				<span class="icon">
-  					
+  				<span class="icon" :class="classMap[seller.supports[0].type]">
   				</span>
   				<span class="text">
   					{{seller.supports[0].description}}
   				</span>
   			</div>
   		</div>
+  		<div class="support-count" v-if="seller.supports">
+  			<span class="count" @click="showDetail">
+				{{seller.supports.length}}个
+  			</span>
+  			<span class="icon-keyboard_arrow_right"></span>
+  		</div>
   	</div>
-  	<div class="bulletin-wrapper"></div>
+  	<div class="bulletin-wrapper" @click="showDetail">
+  		<span class="bulletin-title"></span><span class="bulletin-text">{{seller.bulletin}}</span>
+  		<i class="icon-keyboard_arrow_right"></i>
+  	</div>
+  	<div class="background"><img :src="seller.avatar" alt="" width="100%" height="100%"></div>
+  	<div class="detail" v-show="detailShow">
+  		
+  	</div>
   </div>
 </template>
 
@@ -34,8 +46,20 @@ export default {
     },
   data () {
     return {
-      msg: 'Welcome to header'
+      msg: 'Welcome to header',
+      detailShow: false
     };
+  },
+  created(){
+  	this.classMap=['decrease', 'discount', 'special', 'invoice', 'guarantee']
+  },
+  methods:{
+  	showDetail(){
+  		this.detailShow = true;
+  	},
+  	hideDetail(){
+  		this.detailShow = false;
+  	}
   }
 };
 </script>
@@ -45,12 +69,18 @@ export default {
 @import "./../../common/sass/mixin.scss";
 .header{
 	color: #ffffff;
-	background-color: #000;
+	position: relative;
+	background-color: rgba(7,17,27,0.5);
+	overflow: hidden;
 	.content-wrapper{
 		padding: 24px 12px 18px 24px;
 		font-size: 0;
+		position: relative;
 		.avatar{
 			display: inline-block;
+			img{
+				border-radius: 2px;
+			}
 		}
 		.content{
 			display: inline-block;
@@ -76,7 +106,6 @@ export default {
 			.description{
 				font-size: 12px;
 				color: rgb(255,255,255);
-				font-weight: 200;
 				line-height: 12px;
 				margin-top: 8px;
 			}
@@ -87,10 +116,105 @@ export default {
 				color: rgb(255,255,255);
 				font-weight: 200;
 				line-height: 12px;
+				vertical-align: top;
+				}
+				.icon{
+					display: inline-block;
+					width: 12px;
+					height: 12px;
+					margin-right: 4px;
+					background-size: 12px 12px;
+					background-repeat: no-repeat;
+					&.decrease{
+						@include bg-image('decrease_1');
+					}
+					&.discount{
+						@include bg-image('discount_1');
+					}
+					&.guarantee{
+						@include bg-image('guarantee_1');
+					}
+					&.invoice{
+						@include bg-image('invoice_1');
+					}
+					&.special{
+						@include bg-image('special_1');
+					}
+
 				}
 			}
 		}
+		.support-count{
+			position: absolute;
+			bottom: 14px;
+			right: 12px;
+			padding: 0 8px;
+			height: 24px;
+			line-height: 24px;
+			border-radius: 14px;
+			background-color: rgba(0,0,0,0.2);
+			text-align: center;
+			.count{
+				vertical-align: top;
+				color: #ffffff;
+				font-size: 10px;
+			}
+			.icon-keyboard_arrow_right{
+				font-size: 10px;
+				height: 24px;
+				line-height: 24px;
+			}
+		}
 	}
+	.bulletin-wrapper{
+		height: 28px;
+		line-height: 28px;
+		padding: 0 22px 0 12px;
+		@include text-overflow;
+		position: relative;
+		background-color: rgba(7,17,27,0.2);
+		.bulletin-title{
+			display: inline-block;
+			vertical-align: top;
+			width: 22px;
+			height: 12px;
+			@include bg-image('bulletin');
+			background-size: 22px 12px;
+			background-repeat: no-repeat;
+			font-size: 10px;
+			margin-top: 8px;
+		}
+		.bulletin-text{
+			font-size: 10px;
+			vertical-align: top;
+			margin: 0 4px;
+		}
+		.icon-keyboard_arrow_right{
+			position: absolute;
+			font-size: 10px;
+			right: 12px;
+			top: 9px;
+		}
+	}
+	.background{
+		width: 100%;
+		height: 100%;
+		z-index: -1;
+		position: absolute;
+		left: 0;
+		top: 0;
+		filter:blur(10px);
 
+	}
+	.detail{
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 100;
+		width: 100%;
+		height: 100%;
+		overflow: auto;
+		background-color: rgba(7,17,27,0.8);
+	}
 }
 </style>
