@@ -31,7 +31,14 @@
   	</div>
   	<div class="background"><img :src="seller.avatar" alt="" width="100%" height="100%"></div>
   	<div class="detail" v-show="detailShow">
-  		
+  		<div class="detail-wrapper clearfix">
+  			<div class="detail-main">
+  				<h1 class="name">{{seller.name}}</h1>
+  			</div>
+  		</div>
+  		<div class="detail-close" @click="hideDetail">
+  			<i class="icon-close"></i>
+  		</div>
   	</div>
   </div>
 </template>
@@ -67,6 +74,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only  lang="sass" type='stylesheet/scss'-->
 <style  lang="scss"  type="text/css" scoped>
 @import "./../../common/sass/mixin.scss";
+@import "./../../common/sass/base.scss";
 .header{
 	color: #ffffff;
 	position: relative;
@@ -215,6 +223,28 @@ export default {
 		height: 100%;
 		overflow: auto;
 		background-color: rgba(7,17,27,0.8);
+		.detail-wrapper{
+			width: 100%;
+			min-height: 100%;
+			.detail-main{
+				margin-top: 64px;
+				padding: 0 0 64px 0;//即colse的高度
+				.name{
+					line-height: 16px;
+					text-align: center;
+					font-size: 16px;
+					font-weight: 700;
+				}
+			}
+		}
+		.detail-close{
+			position: relative;
+			width: 32px;
+			height: 32px;
+			margin: -64px auto; //注意点
+			clear: both;
+			font-size: 32px;
+		}
 	}
 }
 </style>

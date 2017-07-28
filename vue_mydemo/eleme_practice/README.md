@@ -144,6 +144,8 @@ eg:<img  width="64" height="64" :src="seller.avatar" alt=""></br>
 5.模糊滤镜，[参考网址](http://www.w3cplus.com/css3/ten-effects-with-css3-filter)
 filter:blur(10px);</br>
 6.点击事件@click</br>
+7.sticky footer布局，示例：header 中的detail模块</br>
+8.computed 相当于实时计算
 
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
@@ -151,6 +153,7 @@ filter:blur(10px);</br>
 [eslint](https://eslint.org)</br>
 [高仿饿了么实战教程](https://github.com/ustbhuangyi/vue-sell)</br>
 [vue-cli中配置sass](http://www.cnblogs.com/rainheader/p/6505366.html)</br>
+[sticky footer布局](http://www.w3cplus.com/css3/css-secrets/sticky-footers.html)
 
 #相关知识点：
 [flex布局]
