@@ -145,7 +145,15 @@ eg:<img  width="64" height="64" :src="seller.avatar" alt=""></br>
 filter:blur(10px);</br>
 6.点击事件@click</br>
 7.sticky footer布局，示例：header 中的detail模块</br>
-8.computed 相当于实时计算
+8.computed 相当于实时计算</br>
+9.分数算法：let score = Math.floor(this.score * 2) / 2;</br>
+10.组件使用：引入：import star from './../star/star'</br>
+注册： components: {
+    star
+  }</br>
+  使用：<star :size='48' :score="seller.score"></star></br>
+11.v-for循环里的索引使用：v-for="(item,index)  in seller.supports"
+              调用：{{seller.supports[index].description}}
 
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
@@ -156,7 +164,7 @@ filter:blur(10px);</br>
 [sticky footer布局](http://www.w3cplus.com/css3/css-secrets/sticky-footers.html)
 
 #相关知识点：
-[flex布局]
+[flex布局](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 [vue-router](https://router.vuejs.org/zh-cn/)
 [vue引入sass报module not find问题](https://segmentfault.com/q/1010000008321697)
 [vue-resource](https://github.com/pagekit/vue-resource)
