@@ -30,6 +30,7 @@
   		<i class="icon-keyboard_arrow_right"></i>
   	</div>
   	<div class="background"><img :src="seller.avatar" alt="" width="100%" height="100%"></div>
+  	<transition name="fade">
   	<div class="detail" v-show="detailShow">
   		<div class="detail-wrapper clearfix">
   			<div class="detail-main">
@@ -60,6 +61,7 @@
   			<i class="icon-close"></i>
   		</div>
   	</div>
+  	</transition>
   </div>
 </template>
 
@@ -246,7 +248,15 @@ export default {
 		width: 100%;
 		height: 100%;
 		overflow: auto;
-		background-color: rgba(7,17,27,0.8);
+		opacity: 1;
+		background:rgba(7,17,27,0.8);
+		&.fade-enter-active, &.fade-leave-active{
+			transition: all 0.5s;
+		}
+		&.fade-enter, &.fade-leave-active{
+			opacity: 0;
+			background: rgba(7, 17, 27, 0);
+		}
 		.detail-wrapper{
 			width: 100%;
 			min-height: 100%;

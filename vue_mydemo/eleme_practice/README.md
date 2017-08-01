@@ -154,20 +154,46 @@ filter:blur(10px);</br>
   使用：<star :size='48' :score="seller.score"></star></br>
 11.v-for循环里的索引使用：v-for="(item,index)  in seller.supports"
               调用：{{seller.supports[index].description}}
+12.[vue2.0过渡动画](http://www.cnblogs.com/jiangxiaobo/p/6076652.html)
+13.flex: 0 0 80px;</br>
+flex 属性，是以下三个属性的简写：</br>
+flex-grow:0; 定义弹性盒子项的拉伸因子，即子项分配父项剩余空间的比，默认值为 0；</br>
+flex-shrink:1; 指定了 flex 元素的收缩规则，子项的收缩所占的份数，默认值为1 [ 当所有子项相加的宽度大于父项的宽度，每个子项减少的多出的父项宽度的 1/n ]</br>
+felx-basis:auto; 指定了 flex 元素在主轴方向上的初始大小，即子项的宽度</br>
+14.在vue2.0里如何获得DOM元素：</br>
 
+```HTML
+<template>
+  <div style="display: block;" ref="abc">
+    <!-- 在js中通过this.$refs.abc -->
+  </div>
+</template>
+
+<script>
+export default {
+  mounted () {
+    console.log(this.$refs.abc.style.cssText)
+  }
+}
+</script>
+```
+</br>
+15.this.$nextTick()  $nextTick 是在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 $nextTick，则可以在回调中获取更新后的 DOM </br>
+16.goods列表模块，联动原理：计算右侧Y值落在哪个区间，需要计算每个小模块的高度。</br>
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
 [如何在项目中使用sass](http://www.w3cplus.com/preprocessor/how-to-create-project-with-sass.html)</br>
 [eslint](https://eslint.org)</br>
 [高仿饿了么实战教程](https://github.com/ustbhuangyi/vue-sell)</br>
 [vue-cli中配置sass](http://www.cnblogs.com/rainheader/p/6505366.html)</br>
-[sticky footer布局](http://www.w3cplus.com/css3/css-secrets/sticky-footers.html)
+[sticky footer布局](http://www.w3cplus.com/css3/css-secrets/sticky-footers.html)</br>
+[better-scroll](https://github.com/ustbhuangyi/better-scroll)</br>
 
 #相关知识点：
-[flex布局](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
-[vue-router](https://router.vuejs.org/zh-cn/)
-[vue引入sass报module not find问题](https://segmentfault.com/q/1010000008321697)
-[vue-resource](https://github.com/pagekit/vue-resource)
+[flex布局](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)</br>
+[vue-router](https://router.vuejs.org/zh-cn/)</br>
+[vue引入sass报module not find问题](https://segmentfault.com/q/1010000008321697)</br>
+[vue-resource](https://github.com/pagekit/vue-resource)</br>
 
 #疑问
 当前页面切换路由的问题。vue中路由界面部分切换，与整体切换的关系
