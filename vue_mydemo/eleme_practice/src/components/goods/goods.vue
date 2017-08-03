@@ -3,7 +3,7 @@
     <div class="goods-wrapper">
       <div class="menu-wrapper" ref="menuWrapper">
         <ul>
-          <li v-for="item in goods" class="menu-item">
+          <li v-for="(item,index) in goods" class="menu-item" :class="{'current':currentIndex===index}"  @click="selectMenu(index,$event)">
             <span class="text border-1px">
               <span v-if='item.type>0' class="icon" :class="classMap[item.type]"></span>{{item.name}}
             </span>
@@ -12,7 +12,7 @@
       </div>
       <div class="foods-wrapper" ref="foodsWrapper">
           <ul>
-          <li v-for="item in goods" class="food-list" ref="foodList">
+          <li v-for="item in goods" class="food-list" ref="foodList" >
             <h1 class="title">{{item.name}}</h1>
             <ul>
               <li  v-for="food in item.foods" class="food-item border-1px">
@@ -31,7 +31,7 @@
                   </div>
 
                   <div class="cartcontrol-wrapper">
-                    
+                    <cartcontrol @add="addFood" :food="food"></cartcontrol>
                   </div>
                 </div>
               </li>
@@ -39,13 +39,19 @@
           </li>
         </ul>
       </div>
+      <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
+                :minPrice="seller.minPrice"></shopcart>
+                <!-- 因为此组件中的seller是从外组件传进来的，所以需要在index中的<router-view :seller="seller"> 将seller传过来，然后再将selectFoods等传给下一个组件 -->
     </div>
-    <div class="footer-wrapper"></div>
+    <div class="footer-wrapper">
+    </div>
   </div>
 </template>
 
 <script>
 import BSscroll from 'better-scroll';
+import shopcart from './../shopcart/shopcart';
+import cartcontrol from './../cartcontrol/cartcontrol';
 var ERR_OK=0;
 export default {
   name: 'goods',
@@ -57,8 +63,36 @@ export default {
   data () {
     return {
       goods:[],//设置goods为空，然后再从服务器上取相关结果
-      msg: 'Welcome to goods'
+      msg: 'Welcome to goods',
+      listHeight:[] ,//这是个数组，因为要知道每个区间的高度
+      scrollY:0
     };
+  },
+  computed:{
+     currentIndex() {
+        for (let i = 0; i < this.listHeight.length; i++) {
+          let height1 = this.listHeight[i];
+          let height2 = this.listHeight[i + 1];
+          //获得scrollY落在哪个区间值上面或者是最后一个，就是当前的索引值。然后再html中，用索引值控制当前样式
+          if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
+            return i;
+          }
+        }
+        return 0;
+      },
+      selectFoods() {
+        let foods = [];
+        //遍历goods中的分类列表，然后遍历分类列表中被选中的商品，存入数组
+        this.goods.forEach((good) => {
+          good.foods.forEach((food) => {
+            if (food.count) {
+              foods.push(food);
+            }
+          });
+        });
+        return foods; //返回这个数据。可以用shopcart 调用selectfoods完成联动，实现了两个组件的联动
+        //原理：当选择商品时，goods就会发生变化，然后这个函数就会实时变化，若shopcart组件调用这个数据，则goods组件与shopcart组件 这两个组件数据就会联动
+      }
   },
   created(){
     this.classMap = ['decrease', 'discount', 'special', 'invoice', 'guarantee'];
@@ -68,6 +102,7 @@ export default {
         this.goods=response.data;
           this.$nextTick(() => {
             this._initScroll();
+            this._calculateHeight();
       });
         console.log(this.goods);
       } 
@@ -76,16 +111,59 @@ export default {
   
   },
   methods:{
+    selectMenu(index, event) {
+        if (!event._constructed) {
+          return;
+        }
+        let foodList = this.$refs.foodList;
+        let el = foodList[index];
+        this.foodsScroll.scrollToElement(el, 300);
+      },
+      selectFood(food, event) {
+        //在PC端，better-scroll派发事件会有这个event._constructed属性。默认事件是没有这个属性的
+        //此处若是PC端原生的点击事件，则将这个事件return掉，不触发。
+        if (!event._constructed) {
+          return;
+        }
+        this.selectedFood = food;
+        this.$refs.food.show();
+      },
+      addFood(target) {
+        this._drop(target);
+      },
+      _drop(target) {
+        // 体验优化,异步执行下落动画
+        this.$nextTick(() => {
+          this.$refs.shopcart.drop(target);
+        });
+      },
     _initScroll(){
       this.menuScroll = new BSscroll(this.$refs.menuWrapper,{
-        click:true
+        click:true //better-scroll会阻止掉默认事件，这是为了派发点击事件，此处，若在PC端点击的话，会点击两次
       });
       this.foodsScroll = new BSscroll(this.$refs.foodsWrapper,{
         click:true,
-        probeType: 3
-      })
-         
+        probeType: 3 //告知程序，在滚动时，实时获得其滚动位置
+      });
+      this.foodsScroll.on('scroll', (pos) => {
+        this.scrollY = Math.abs(Math.round(pos.y));
+      });
+    },
+    _calculateHeight(){
+        let foodList=this.$refs.foodList;//获得DOM元素
+        let height=0; //初始值
+        this.listHeight.push(height);
+        for (var i = 0; i < foodList.length; i++) {
+          let item=foodList[i];
+          height+=item.clientHeight;
+          this.listHeight.push(height);
+        }
+        console.log(this.listHeight);
     }
+  },
+  components:{
+    shopcart,
+    cartcontrol
   }
 };
 </script>
@@ -114,7 +192,7 @@ export default {
            position: relative;
           z-index: 10;
           margin-top: -1px;
-          background: #fff;
+          background: pink;
           font-weight: 700;
           .text{
             @include border-none();
