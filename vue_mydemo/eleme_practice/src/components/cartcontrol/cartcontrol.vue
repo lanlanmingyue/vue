@@ -29,7 +29,7 @@
         } else {
           this.food.count++;
         }
-        this.$emit('add', event.target);
+        this.$emit('add', event.target);//分发事件
       },
       decreaseCart(event) {
         if (!event._constructed) {

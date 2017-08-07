@@ -21,6 +21,7 @@
       <div class="ball-container">
         <div v-for="ball in balls">
           <transition name="drop" @before-enter="beforeDrop" @enter="dropping" @after-enter="afterDrop">
+          <!-- 自定义函数 自执行 -->
             <div class="ball" v-show="ball.show">
               <div class="inner inner-hook"></div>
             </div>
@@ -56,6 +57,7 @@
 </template>
 
 <script>
+// 因为小球的落点通通在这里，所以我们要在这个组件里定义几个小球，让这些小球同时做飞入。
   import BScroll from 'better-scroll';
   import cartcontrol from './../cartcontrol/cartcontrol';
 
@@ -160,10 +162,10 @@
       drop(el) {
         for (let i = 0; i < this.balls.length; i++) {
           let ball = this.balls[i];
-          if (!ball.show) {
-            ball.show = true;
-            ball.el = el;
-            this.dropBalls.push(ball);
+          if (!ball.show) { //如果这个ball是false的话
+            ball.show = true; //此处触发动画，触发缓动
+            ball.el = el; //将对象保留出来
+            this.dropBalls.push(ball);//存入已下落小球数组
             return;
           }
         }
@@ -191,15 +193,18 @@
       addFood(target) {
         this.drop(target);
       },
+      testConsole(){
+        console.log('淄执行');
+      },
       beforeDrop(el) {
-        let count = this.balls.length;
+        let count = this.balls.length; //遍历小球
         while (count--) {
           let ball = this.balls[count];
-          if (ball.show) {
-            let rect = ball.el.getBoundingClientRect();
+          if (ball.show) { //如果小球是显示的话，这个小球即为运动的小球
+            let rect = ball.el.getBoundingClientRect(); //获得元素相对于视口的位置
             let x = rect.left - 32;
-            let y = -(window.innerHeight - rect.top - 22);
-            el.style.display = '';
+            let y = -(window.innerHeight - rect.top - 22);//window.innerHeight窗口高度
+            el.style.display = ''; //让其显示
             el.style.webkitTransform = `translate3d(0,${y}px,0)`;
             el.style.transform = `translate3d(0,${y}px,0)`;
             let inner = el.getElementsByClassName('inner-hook')[0];
@@ -210,7 +215,8 @@
       },
       dropping(el, done) {
         /* eslint-disable no-unused-vars */
-        let rf = el.offsetHeight;
+        // enter 小球进入状态
+        let rf = el.offsetHeight; //offsetHeight获取元素高度
         this.$nextTick(() => {
           el.style.webkitTransform = 'translate3d(0,0,0)';
           el.style.transform = 'translate3d(0,0,0)';
@@ -221,7 +227,8 @@
         });
       },
       afterDrop(el) {
-        let ball = this.dropBalls.shift();
+        //小球运动完时，将运动完的小球 设置为不可见
+        let ball = this.dropBalls.shift(); //取dropBalls
         if (ball) {
           ball.show = false;
           el.style.display = 'none';

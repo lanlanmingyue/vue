@@ -15,7 +15,7 @@
           <li v-for="item in goods" class="food-list" ref="foodList" >
             <h1 class="title">{{item.name}}</h1>
             <ul>
-              <li  v-for="food in item.foods" class="food-item border-1px">
+              <li  @click="selectFood(food,$event)" v-for="food in item.foods" class="food-item border-1px">
                 <div class="icon">
                   <img width="57" height="57" :src="food.icon">
                 </div>
@@ -42,8 +42,10 @@
       <shopcart ref="shopcart" :selectFoods="selectFoods" :deliveryPrice="seller.deliveryPrice"
                 :minPrice="seller.minPrice"></shopcart>
                 <!-- 因为此组件中的seller是从外组件传进来的，所以需要在index中的<router-view :seller="seller"> 将seller传过来，然后再将selectFoods等传给下一个组件 -->
+                <!-- 父组件如何访问到子组件，<shopcart ref="shopcart"> 则调用方法为：this.$refs.shopcart -->
     </div>
     <div class="footer-wrapper">
+    <food @add="addFood" :food="selectedFood" ref="food"></food>
     </div>
   </div>
 </template>
@@ -52,6 +54,7 @@
 import BSscroll from 'better-scroll';
 import shopcart from './../shopcart/shopcart';
 import cartcontrol from './../cartcontrol/cartcontrol';
+import food from './../food/food'
 var ERR_OK=0;
 export default {
   name: 'goods',
@@ -65,7 +68,8 @@ export default {
       goods:[],//设置goods为空，然后再从服务器上取相关结果
       msg: 'Welcome to goods',
       listHeight:[] ,//这是个数组，因为要知道每个区间的高度
-      scrollY:0
+      scrollY:0,
+      selectedFood:{}
     };
   },
   computed:{
@@ -104,7 +108,6 @@ export default {
             this._initScroll();
             this._calculateHeight();
       });
-        console.log(this.goods);
       } 
 
     });
@@ -132,7 +135,7 @@ export default {
         this._drop(target);
       },
       _drop(target) {
-        // 体验优化,异步执行下落动画
+        // 体验优化,异步执行下落动画，drop方法定义在shopcart组件中
         this.$nextTick(() => {
           this.$refs.shopcart.drop(target);
         });
@@ -158,12 +161,12 @@ export default {
           height+=item.clientHeight;
           this.listHeight.push(height);
         }
-        console.log(this.listHeight);
     }
   },
   components:{
     shopcart,
-    cartcontrol
+    cartcontrol,
+    food
   }
 };
 </script>

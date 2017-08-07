@@ -181,6 +181,16 @@ export default {
 15.this.$nextTick()  $nextTick 是在下次 DOM 更新循环结束之后执行延迟回调，在修改数据之后使用 $nextTick，则可以在回调中获取更新后的 DOM </br>
 16.goods列表模块，联动原理：计算右侧Y值落在哪个区间，需要计算每个小模块的高度。</br>
 
+17.在PC端，better-scroll派发事件会有这个event._constructed属性。默认事件是没有这个属性的</br>
+18.goods.vue的 由路由传递给子组件值。 --因为此组件中的seller是从外组件传进来的，所以需要在index中的router-view :seller="seller"，将seller传过来，然后再将selectFoods等传给下一个组件 --</br>
+20.购物车组件实质是 选择了多少商品 的映射，那我们就需要从goods组件中，获得 选择了多少商品的 传递值</br>
+21. Vue.set </br>
+22.this.$emit() </br>
+23. 7-17 selectFoods方法待定 </br>
+24.子组件传事件给父组件，父组件即可调用自助件中定义的方法。eg:shopcart.vue中的ball的drop方法。</br>
+25.父组件如何访问到子组件，<shopcart ref="shopcart"> 则调用方法为：this.$refs.shopcart  </br>
+26.cubic-bezier 贝赛尔曲线运动，跟小球的运动弧度有关系</br>
+
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
 [如何在项目中使用sass](http://www.w3cplus.com/preprocessor/how-to-create-project-with-sass.html)</br>
 [eslint](https://eslint.org)</br>
