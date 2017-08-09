@@ -83,6 +83,7 @@
     data() {
       return {
         favorite: (() => {
+          //从缓存中读取favotite
           return loadFromLocal(this.seller.id, 'favorite', false);
         })()
       };

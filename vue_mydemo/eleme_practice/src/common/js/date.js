@@ -11,8 +11,11 @@ export function formatDate(date, fmt) {
 	};
 	for (let k in o) {
 		if (new RegExp(`(${k})`).test(fmt)) {
+			//构造字符串
 			let str = o[k] + '';
 			fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : padLeftZero(str));
+			//(RegExp.$1.length === 1) ? str : padLeftZero(str) 避免得到的数字是1位这种情况。若为1位数字，则左边补零
+			
 		}
 	}
 	return fmt;

@@ -162,6 +162,7 @@ flex-shrink:1; 指定了 flex 元素的收缩规则，子项的收缩所占的�
 felx-basis:auto; 指定了 flex 元素在主轴方向上的初始大小，即子项的宽度</br>
 14.在vue2.0里如何获得DOM元素：</br>
 
+
 ```HTML
 <template>
   <div style="display: block;" ref="abc">
@@ -190,6 +191,10 @@ export default {
 24.子组件传事件给父组件，父组件即可调用自助件中定义的方法。eg:shopcart.vue中的ball的drop方法。</br>
 25.父组件如何访问到子组件，<shopcart ref="shopcart"> 则调用方法为：this.$refs.shopcart  </br>
 26.cubic-bezier 贝赛尔曲线运动，跟小球的运动弧度有关系</br>
+
+27.可传变量的组件。参考：ratingselect</br>
+28.filter() 过滤函数，参考：ratingselect</br>
+29.import {formatDate,a} from   带花括号的原因是，此为自定义模块函数formatDate和a。</br>
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
 [如何在项目中使用sass](http://www.w3cplus.com/preprocessor/how-to-create-project-with-sass.html)</br>

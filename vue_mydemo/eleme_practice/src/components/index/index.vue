@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import {urlParse} from './../../common/js/util';
 import vheader from './../header/header';
 const ERR_OK = 0;
 export default {
@@ -19,16 +20,20 @@ export default {
     return {
       msg: 'Welcome to index.vue',
       seller: {
-
+         id: (() => {
+            let queryParam = urlParse();
+            return queryParam.id;
+          })()
       }
     };
   },
   created () {
-    this.$http.get('./api/seller').then((response) => {
+    this.$http.get('./api/seller?id='+this.seller.id).then((response) => {
       response = response.body;
       if (response.error === ERR_OK) {
-        this.seller = response.data;
-        //console.log(this.seller);
+        //this.seller = response.data;
+          this.seller = Object.assign({}, this.seller, response.data);//相当于给原来的对象扩展了属性ID
+        console.log(this.seller);
       }
     });
   },
