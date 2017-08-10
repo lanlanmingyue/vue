@@ -195,6 +195,8 @@ export default {
 27.可传变量的组件。参考：ratingselect</br>
 28.filter() 过滤函数，参考：ratingselect</br>
 29.import {formatDate,a} from   带花括号的原因是，此为自定义模块函数formatDate和a。</br>
+30.a.active 当前点击链接样式，在路由里加这个属性  linkActiveClass: 'active'</br>
+
 
 #参考资料链接:[sass中文官网](http://www.w3cplus.com/sassguide/)</br>
 [如何在项目中使用sass](http://www.w3cplus.com/preprocessor/how-to-create-project-with-sass.html)</br>
