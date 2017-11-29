@@ -8,5 +8,11 @@ export default {
   SET_LOADING (state, platform) {
     state.isLoading = platform;
   },
+	ADD(state) {
+			state.count += 1;
+		},
+	REDUCE(state) {
+			state.count -= 1;
+		}
   
 };

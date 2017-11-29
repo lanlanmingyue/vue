@@ -3,6 +3,7 @@
   <div class="container">
     <!-- 由于html不区分大小写，所以js中驼峰命名方式在html中要改成用短横线连接的形式 -->
     <home-header></home-header>
+    <count></count>
     <div class="content">
       <ul class="cont_ul">
        <list  
@@ -41,6 +42,7 @@ p{
    // 导入要用到的子组件  
     import HomeHeader from '../components/HomeHeader'  
     import List from '../components/List'  
+    import Count from '../components/count'  
     export default {  
         data () {  
             return {  
@@ -50,7 +52,8 @@ p{
         // 在components字段中，包含导入的子组件  
         components: {  
             HomeHeader,  
-            List  
+            List,
+            Count  
         },  
         // 在组件创建完成时，执行的钩子函数  
         created (){  
